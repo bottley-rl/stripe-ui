@@ -36,7 +36,7 @@
         <source url="https://cdn.cocoapods.org/"/>
       </config>
       <pods use-frameworks="true">
-        <pod name="Stripe" spec="~> 21.8.1"/>
+        <pod name="Stripe" spec="~> 22.8.4"/>
       </pods>
     </podspec>
   </platform>
