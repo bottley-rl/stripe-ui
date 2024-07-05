@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "name": "cordova-plugin-stripeui",
+  "cordova_name": "StripeUIPlugin",
+  "description": "Cordova plugin for Stripe prebuilt native UI",
+  "license": "MIT",
+  "author": {
+    "name": "Gecs Bernat"
+  },
+  "repo": "https://github.com/gecsbernat/cordova-plugin-stripeui",
+  "issue": "https://github.com/gecsbernat/cordova-plugin-stripeui/issues",
+  "keywords": [
+    "cordova",
+    "ionic",
+    "stripe",
+    "cordova-android",
+    "cordova-plugin",
+    "ionic-framework",
+    "cordova-ios",
+    "stripe-checkout",
+    "stripe-payment",
+    "stripe-sdk"
+  ],
+  "platforms": [
+    "android",
+    "ios"
+  ],
+  "engines": {
+    "name": "cordova",
+    "version": ">=9.0.0"
+  }
+}

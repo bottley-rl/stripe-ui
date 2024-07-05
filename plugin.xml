@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-stripeui" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+  <name>StripeUI Plugin</name>
+  <repo>https://github.com/gecsbernat/cordova-plugin-stripeui</repo>
+  <js-module name="StripeUIPlugin" src="www/StripeUIPlugin.js">
+    <clobbers target="StripeUIPlugin"/>
+  </js-module>
+  <platform name="android">
+    <config-file parent="/*" target="res/xml/config.xml">
+      <feature name="StripeUIPlugin">
+        <param name="android-package" value="cordova.plugin.stripeuiplugin.StripeUIPlugin"/>
+      </feature>
+    </config-file>
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <meta-data android:name="com.google.android.gms.wallet.api.enabled" android:value="true" />
+      <activity android:exported="true" android:theme="@style/Theme.AppCompat.Light.NoActionBar" android:name="cordova.plugin.stripeuiplugin.CheckoutActivity">
+        <intent-filter>
+          <action android:name="android.intent.action.DEFAULT"/>
+        </intent-filter>
+      </activity>
+    </config-file>
+    <source-file src="src/android/StripeUIPlugin.java" target-dir="src/cordova/plugin/stripeuiplugin" />
+    <source-file src="src/android/CheckoutActivity.java" target-dir="src/cordova/plugin/stripeuiplugin" />
+    <framework custom="true" src="src/android/gradle.gradle" type="gradleReference"/>	
+  </platform>
+  <platform name="ios">
+    <config-file target="config.xml" parent="/*">
+      <feature name="StripeUIPlugin">
+        <param name="ios-package" value="StripeUIPlugin"/>
+      </feature>
+    </config-file>
+    <source-file src="src/ios/StripeUIPlugin.swift" />
+    <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
+    <podspec>
+      <config>
+        <source url="https://cdn.cocoapods.org/"/>
+      </config>
+      <pods use-frameworks="true">
+        <pod name="Stripe" spec="~> 21.8.1"/>
+      </pods>
+    </podspec>
+  </platform>
+</plugin>
