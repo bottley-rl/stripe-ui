@@ -6,48 +6,38 @@ import Stripe
     @objc(presentPaymentSheet:)
     func presentPaymentSheet(command: CDVInvokedUrlCommand){
         let paymentConfig = (command.argument(at: 0) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
-        // let billingConfig = (command.argument(at: 1) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
         let publishableKey = (paymentConfig["publishableKey"] ?? "") as? String ?? ""
         let companyName = (paymentConfig["companyName"] ?? "") as? String ?? ""
-        let paymentIntent = (paymentConfig["paymentIntent"] ?? "") as? String ?? ""
+        let paymentIntentClientSecret = (paymentConfig["paymentIntentClientSecret"] ?? "") as? String ?? ""
         let customerId = (paymentConfig["customerId"] ?? "") as? String ?? ""
-        let ephemeralKey = (paymentConfig["ephemeralKey"] ?? "") as? String ?? ""
+        let customerEphemeralKeySecret = (paymentConfig["customerEphemeralKeySecret"] ?? "") as? String ?? ""
         let appleMerchantId = (paymentConfig["appleMerchantId"] ?? "") as? String ?? ""
         let appleMerchantCountryCode = (paymentConfig["appleMerchantCountryCode"] ?? "") as? String ?? ""
         let mobilePayEnabled = (paymentConfig["mobilePayEnabled"] ?? false) as? Bool ?? false
-        // let billingEmail = (billingConfig["billingEmail"] ?? "") as? String ?? ""
-        // let billingName = (billingConfig["billingName"] ?? "") as? String ?? ""
-        // let billingPhone = (billingConfig["billingPhone"] ?? "") as? String ?? ""
-        // let billingCity = (billingConfig["billingCity"] ?? "") as? String ?? ""
-        // let billingCountry = (billingConfig["billingCountry"] ?? "") as? String ?? ""
-        // let billingLine1 = (billingConfig["billingLine1"] ?? "") as? String ?? ""
-        // let billingLine2 = (billingConfig["billingLine2"] ?? "") as? String ?? ""
-        // let billingPostalCode = (billingConfig["billingPostalCode"] ?? "") as? String ?? ""
-        // let billingState = (billingConfig["billingState"] ?? "") as? String ?? ""
-        StripeAPI.defaultPublishableKey = publishableKey
+        let returnURL = (paymentConfig["returnURL"] ?? "") as? String ?? ""
+        STPAPIClient.shared.publishableKey = publishableKey
+
+        // MARK: Create a PaymentSheet instance
         var configuration = PaymentSheet.Configuration()
+
+        if returnURL != "" {
+            configuration.returnURL = returnURL
+        }
+      
         if companyName != "" {
             configuration.merchantDisplayName = companyName
         }
         if customerId != "" && ephemeralKey != "" {
-            configuration.customer = .init(id: customerId, ephemeralKeySecret: ephemeralKey)
+             configuration.customer = .init(id: customerId, ephemeralKeySecret: customerEphemeralKeySecret)
         }
+        
         if mobilePayEnabled && appleMerchantId != "" && appleMerchantCountryCode != "" {
             configuration.applePay = .init(merchantId: appleMerchantId, merchantCountryCode: appleMerchantCountryCode)
         }
-        // if !billingConfig.isEmpty {
-        //     configuration.defaultBillingDetails.email = billingEmail
-        //     configuration.defaultBillingDetails.name = billingName
-        //     configuration.defaultBillingDetails.phone = billingPhone
-        //     configuration.defaultBillingDetails.address.city = billingCity
-        //     configuration.defaultBillingDetails.address.country = billingCountry
-        //     configuration.defaultBillingDetails.address.line1 = billingLine1
-        //     configuration.defaultBillingDetails.address.line2 = billingLine2
-        //     configuration.defaultBillingDetails.address.postal_code = billingPostalCode
-        //     configuration.defaultBillingDetails.address.state = billingState
-        // }
+
+        configuration.allowsDelayedPaymentMethods = true
         if paymentIntent != "" {
-            self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntent, configuration: configuration)
+            self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
             paymentSheet?.present(from: self.viewController) { paymentResult in
                 switch paymentResult {
                 case .completed:
