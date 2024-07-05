@@ -27,7 +27,7 @@ import Stripe
         if companyName != "" {
             configuration.merchantDisplayName = companyName
         }
-        if customerId != "" && ephemeralKey != "" {
+        if customerId != "" && customerEphemeralKeySecret != "" {
              configuration.customer = .init(id: customerId, ephemeralKeySecret: customerEphemeralKeySecret)
         }
         
@@ -36,7 +36,7 @@ import Stripe
         }
 
         configuration.allowsDelayedPaymentMethods = true
-        if paymentIntent != "" {
+        if paymentIntentClientSecret != "" {
             self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
             paymentSheet?.present(from: self.viewController) { paymentResult in
                 switch paymentResult {
