@@ -38,7 +38,9 @@ public class StripeUIPlugin extends CordovaPlugin {
                 String paymentIntentClientSecret = paymentConfig.getString("paymentIntentClientSecret");
                 String customerId = paymentConfig.getString("customerId");
                 String customerEphemeralKeySecret = paymentConfig.getString("customerEphemeralKeySecret");
-                String appleMerchantCountryCode = paymentConfig.getString("appleMerchantCountryCode");
+                String countryCode = paymentConfig.getString("countryCode");
+                String currencyCode = paymentConfig.getString("currencyCode");
+                boolean googlePayProd = paymentConfig.getBoolean("googlePayProd");
                 boolean mobilePayEnabled = paymentConfig.getBoolean("mobilePayEnabled");
                 Intent intent = new Intent(cordova.getActivity().getApplicationContext(), CheckoutActivity.class);
                 intent.putExtra("publishableKey", publishableKey);
@@ -46,7 +48,9 @@ public class StripeUIPlugin extends CordovaPlugin {
                 intent.putExtra("paymentIntentClientSecret", paymentIntentClientSecret);
                 intent.putExtra("customerId", customerId);
                 intent.putExtra("customerEphemeralKeySecret", customerEphemeralKeySecret);
-                intent.putExtra("appleMerchantCountryCode", appleMerchantCountryCode);
+                intent.putExtra("countryCode", countryCode);
+                intent.putExtra("currencyCode", currencyCode);
+                intent.putExtra("googlePayProd", googlePayProd);
                 intent.putExtra("mobilePayEnabled", mobilePayEnabled);
                 if (billingConfig != null) {
                     String billingEmail = billingConfig.getString("billingEmail");
