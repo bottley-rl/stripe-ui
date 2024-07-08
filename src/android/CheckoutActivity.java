@@ -26,7 +26,8 @@ public class CheckoutActivity extends AppCompatActivity {
         String paymentIntentClientSecret = receivedIntent.getStringExtra("paymentIntentClientSecret");
         String customerId = receivedIntent.getStringExtra("customerId");
         String customerEphemeralKeySecret = receivedIntent.getStringExtra("customerEphemeralKeySecret");
-        String appleMerchantCountryCode = receivedIntent.getStringExtra("appleMerchantCountryCode");
+        String countryCode = receivedIntent.getStringExtra("countryCode");
+        String currencyCode = receivedIntent.getStringExtra("currencyCode");
         String billingEmail = receivedIntent.getStringExtra("billingEmail");
         String billingName = receivedIntent.getStringExtra("billingName");
         String billingPhone = receivedIntent.getStringExtra("billingPhone");
@@ -36,20 +37,21 @@ public class CheckoutActivity extends AppCompatActivity {
         String billingLine2 = receivedIntent.getStringExtra("billingLine2");
         String billingPostalCode = receivedIntent.getStringExtra("billingPostalCode");
         String billingState = receivedIntent.getStringExtra("billingState");
-        boolean mobilePayEnabled = receivedIntent.getBooleanExtra("mobilePayEnabled", false);
+        boolean mobilePayEnabled = receivedIntent.getBooleanExtra("mobilePayEnabled", true);
+        boolean googlePayProd = receivedIntent.getBooleanExtra("googlePayProd", false);
         try {
             assert publishableKey != null;
             assert paymentIntentClientSecret != null;
             assert companyName != null;
             assert customerId != null;
             assert customerEphemeralKeySecret != null;
-            assert appleMerchantCountryCode != null;
+            assert countryCode != null;
             PaymentConfiguration.init(this, publishableKey);
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
             PaymentSheet.Address billingAddress = new PaymentSheet.Address(billingCity, billingCountry, billingLine1, billingLine2, billingPostalCode, billingState);
             PaymentSheet.BillingDetails billingDetails = new PaymentSheet.BillingDetails(billingAddress, billingEmail, billingName, billingPhone);
             PaymentSheet.CustomerConfiguration customerConfig = new PaymentSheet.CustomerConfiguration(customerId, customerEphemeralKeySecret);
-            PaymentSheet.GooglePayConfiguration googlePayConfig = mobilePayEnabled ? new PaymentSheet.GooglePayConfiguration(PaymentSheet.GooglePayConfiguration.Environment.Production, appleMerchantCountryCode) : null;
+            PaymentSheet.GooglePayConfiguration googlePayConfig = mobilePayEnabled ? new PaymentSheet.GooglePayConfiguration(googlePayProd ? PaymentSheet.GooglePayConfiguration.Environment.Production : PaymentSheet.GooglePayConfiguration.Environment.Test, countryCode, currencyCode) : null;
             PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(companyName, customerConfig, googlePayConfig, null, billingDetails);
             paymentSheet.presentWithPaymentIntent(paymentIntentClientSecret, configuration);
         } catch (Exception e) {
