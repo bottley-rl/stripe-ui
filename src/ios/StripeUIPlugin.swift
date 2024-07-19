@@ -1,5 +1,6 @@
 import UIKit
-import Stripe
+import Stripe   
+import StripePaymentSheet
 
 @objc(StripeUIPlugin) class StripeUIPlugin : CDVPlugin {
     var paymentSheet: PaymentSheet?
@@ -18,7 +19,7 @@ import Stripe
         STPAPIClient.shared.publishableKey = publishableKey
 
         // MARK: Create a PaymentSheet instance
-        var configuration = PaymentSheet.Configuration()
+        var configuration = Stripe.PaymentSheet.Configuration()
 
         if returnURL != "" {
             configuration.returnURL = returnURL
@@ -36,14 +37,16 @@ import Stripe
         }
 
         configuration.allowsDelayedPaymentMethods = true
+
         if paymentIntentClientSecret != "" {
-            self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
+            self.paymentSheet = Stripe.PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
         } else {
-           let intentConfig = PaymentSheet.IntentConfiguration(mode: .setup(currency: "USD")) 
+          var intentConfig = Stripe.PaymentSheet.IntentConfiguration()
+          intentConfig.mode = setup((currency: "USD"))
             { [weak self] _, _, intentCreationCallback in
                 self?.handleConfirm(intentCreationCallback)
             }
-            self.paymentSheet = PaymentSheet(intentConfiguration: intentConfig, configuration: configuration)
+            self.paymentSheet = Stripe.PaymentSheet(intentConfiguration: intentConfig, configuration: configuration)
         }
 
         paymentSheet?.present(from: self.viewController) { paymentResult in
