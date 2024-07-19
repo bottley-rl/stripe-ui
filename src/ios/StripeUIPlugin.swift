@@ -37,7 +37,7 @@ import Stripe
 
         configuration.allowsDelayedPaymentMethods = true
         if paymentIntentClientSecret != "" {
-            self.paymentSheet = PaymentSheet()
+            self.paymentSheet = PaymentSheet(configuration: configuration)
             paymentSheet?.present(from: self.viewController) { paymentResult in
                 switch paymentResult {
                 case .completed:
