@@ -37,9 +37,17 @@ import Stripe
 
         configuration.allowsDelayedPaymentMethods = true
         if paymentIntentClientSecret != "" {
-            self.paymentSheet = PaymentSheet(configuration: configuration)
-            paymentSheet?.present(from: self.viewController) { paymentResult in
-                switch paymentResult {
+            self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
+        } else {
+           let intentConfig = PaymentSheet.IntentConfiguration(mode: .setup(currency: "USD")) 
+            { [weak self] _, _, intentCreationCallback in
+                self?.handleConfirm(intentCreationCallback)
+            }
+            self.paymentSheet = PaymentSheet(intentConfiguration: intentConfig, configuration: configuration)
+        }
+
+        paymentSheet?.present(from: self.viewController) { paymentResult in
+            switch paymentResult {
                 case .completed:
                     let message = ["code": "0", "message": "PAYMENT_COMPLETED"] as [AnyHashable : Any]
                     let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
@@ -52,12 +60,7 @@ import Stripe
                     let message = ["code": "2", "message": "PAYMENT_FAILED", "error":"\(error.localizedDescription)"] as [AnyHashable : Any]
                     let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
                     self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
-                }
             }
-        } else {
-            let message = ["code": "2", "message": "PAYMENT_FAILED", "error":"NO_PAYMENT_INTENT"] as [AnyHashable : Any]
-            let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
-            self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
         }
     }
 }
