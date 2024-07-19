@@ -42,7 +42,7 @@ import StripePaymentSheet
             self.paymentSheet = Stripe.PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
         } else {
           var intentConfig = Stripe.PaymentSheet.IntentConfiguration()
-          intentConfig.mode = setup((currency: "USD"))
+          intentConfig.mode = setup(currency: String? = "USD", setupFutureUsage: SetupFutureUsage = .offSession)
             { [weak self] _, _, intentCreationCallback in
                 self?.handleConfirm(intentCreationCallback)
             }
