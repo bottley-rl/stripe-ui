@@ -18,7 +18,6 @@ import Stripe
         let returnURL = (paymentConfig["returnURL"] ?? "") as? String ?? ""
         STPAPIClient.shared.publishableKey = publishableKey
 
-        // MARK: Create a PaymentSheet instance
         var configuration = PaymentSheet.Configuration()
 
         if returnURL != "" {
@@ -37,6 +36,10 @@ import Stripe
         }
 
         configuration.allowsDelayedPaymentMethods = true
+
+        print("paymentIntentClientSecret:", paymentIntentClientSecret)
+
+        print("setupIntentClientSecret:", setupIntentClientSecret)
 
         if paymentIntentClientSecret != "" {
             self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
