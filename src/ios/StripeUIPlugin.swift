@@ -9,6 +9,7 @@ import Stripe
         let publishableKey = (paymentConfig["publishableKey"] ?? "") as? String ?? ""
         let companyName = (paymentConfig["companyName"] ?? "") as? String ?? ""
         let paymentIntentClientSecret = (paymentConfig["paymentIntentClientSecret"] ?? "") as? String ?? ""
+        let setupIntentClientSecret = (paymentConfig["setupIntentClientSecret"] ?? "") as? String ?? ""
         let customerId = (paymentConfig["customerId"] ?? "") as? String ?? ""
         let customerEphemeralKeySecret = (paymentConfig["customerEphemeralKeySecret"] ?? "") as? String ?? ""
         let appleMerchantId = (paymentConfig["appleMerchantId"] ?? "") as? String ?? ""
@@ -18,7 +19,7 @@ import Stripe
         STPAPIClient.shared.publishableKey = publishableKey
 
         // MARK: Create a PaymentSheet instance
-        var configuration = Stripe.PaymentSheet.Configuration()
+        var configuration = PaymentSheet.Configuration()
 
         if returnURL != "" {
             configuration.returnURL = returnURL
@@ -38,14 +39,9 @@ import Stripe
         configuration.allowsDelayedPaymentMethods = true
 
         if paymentIntentClientSecret != "" {
-            self.paymentSheet = Stripe.PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
+            self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
         } else {
-          var intentConfig = Stripe.PaymentSheet.IntentConfiguration()
-          intentConfig.mode = setup(currency: String? = "USD", setupFutureUsage: SetupFutureUsage = .offSession)
-            { [weak self] _, _, intentCreationCallback in
-                self?.handleConfirm(intentCreationCallback)
-            }
-            self.paymentSheet = Stripe.PaymentSheet(intentConfiguration: intentConfig, configuration: configuration)
+            self.paymentSheet = PaymentSheet(setupIntentClientSecret: setupIntentClientSecret, configuration: configuration)
         }
 
         paymentSheet?.present(from: self.viewController) { paymentResult in
