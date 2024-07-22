@@ -64,4 +64,30 @@ import Stripe
             }
         }
     }
+
+    func confirmSetupIntent(setupIntentClientSecret: String, command: CDVInvokedUrlCommand) {
+        let setupIntentParams = STPSetupIntentConfirmParams(clientSecret: setupIntentClientSecret)
+        
+        STPAPIClient.confirmSetupIntent(with: setupIntentParams, expand: ["payment_method"]) { setupIntent, error in
+            if let error = error {
+                let message = ["code": "2", "message": "SETUP_INTENT_CONFIRMATION_FAILED", "error":"\(error.localizedDescription)"] as [AnyHashable : Any]
+                let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: message)
+                self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
+                return
+            }
+            print("setupIntent res")
+            print(setupIntent)
+            
+            if let paymentMethodID = setupIntent?.paymentMethodID {
+                let message = ["code": "0", "message": "SETUP_INTENT_CONFIRMED", "paymentMethodID": paymentMethodID] as [AnyHashable : Any]
+                let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
+                self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
+            } else {
+                let message = ["code": "2", "message": "SETUP_INTENT_CONFIRMATION_FAILED", "error":"Payment method ID not found"] as [AnyHashable : Any]
+                let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: message)
+                self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
+            }
+        }
+    }
+
 }
