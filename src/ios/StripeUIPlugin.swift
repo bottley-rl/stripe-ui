@@ -71,6 +71,10 @@ import Stripe
         let setupIntentClientSecret = (paymentConfig["setupIntentClientSecret"] ?? "") as? String ?? ""
         let publishableKey = (paymentConfig["publishableKey"] ?? "") as? String ?? ""
 
+        print(paymentConfig)
+        print(setupIntentClientSecret)
+        print(publishableKey)
+
         STPAPIClient.shared.publishableKey = publishableKey
 
         let setupIntentParams = STPSetupIntentConfirmParams(clientSecret: setupIntentClientSecret)
