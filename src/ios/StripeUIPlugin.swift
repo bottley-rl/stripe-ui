@@ -65,7 +65,11 @@ import Stripe
         }
     }
 
-    func confirmSetupIntent(setupIntentClientSecret: String, command: CDVInvokedUrlCommand) {
+    func confirmSetupIntent(command: CDVInvokedUrlCommand) {
+
+        let paymentConfig = (command.argument(at: 0) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
+        let setupIntentClientSecret = (paymentConfig["setupIntentClientSecret"] ?? "") as? String ?? ""
+
         let setupIntentParams = STPSetupIntentConfirmParams(clientSecret: setupIntentClientSecret)
         
         STPAPIClient.confirmSetupIntent(with: setupIntentParams, expand: ["payment_method"]) { setupIntent, error in
