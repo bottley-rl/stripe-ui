@@ -66,13 +66,15 @@ import Stripe
     }
 
     func confirmSetupIntent(command: CDVInvokedUrlCommand) {
-
         let paymentConfig = (command.argument(at: 0) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
         let setupIntentClientSecret = (paymentConfig["setupIntentClientSecret"] ?? "") as? String ?? ""
+        let publishableKey = (paymentConfig["publishableKey"] ?? "") as? String ?? ""
+
+        STPAPIClient.shared.publishableKey = publishableKey
 
         let setupIntentParams = STPSetupIntentConfirmParams(clientSecret: setupIntentClientSecret)
         
-        STPAPIClient.confirmSetupIntent(with: setupIntentParams, expand: ["payment_method"]) { setupIntent, error in
+        STPAPIClient.shared.confirmSetupIntent(with: setupIntentParams, expand: ["payment_method"]) { setupIntent, error in
             if let error = error {
                 let message = ["code": "2", "message": "SETUP_INTENT_CONFIRMATION_FAILED", "error":"\(error.localizedDescription)"] as [AnyHashable : Any]
                 let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: message)

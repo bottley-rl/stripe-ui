@@ -3,7 +3,7 @@ module.exports = {
 	presentPaymentSheet: function (paymentConfig, billingConfig, success, error) {
 		exec(success, error, "StripeUIPlugin", "presentPaymentSheet", [paymentConfig, billingConfig]);
 	},
-	confirmSetupIntent: function (config, success, error) {
-		exec(success, error, "StripeUIPlugin", "confirmSetupIntent", [config]);
+	confirmSetupIntent: function (paymentConfig, success, error) {
+		exec(success, error, "StripeUIPlugin", "confirmSetupIntent", [paymentConfig]);
 	}
 };
