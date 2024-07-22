@@ -65,6 +65,7 @@ import Stripe
         }
     }
 
+    @objc(confirmSetupIntent:)
     func confirmSetupIntent(command: CDVInvokedUrlCommand) {
         let paymentConfig = (command.argument(at: 0) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
         let setupIntentClientSecret = (paymentConfig["setupIntentClientSecret"] ?? "") as? String ?? ""
