@@ -57,7 +57,7 @@ import StripePaymentSheet
         configuration.appearance = appearance
 
         // if paymentIntentClientSecret != "" {
-        self.paymentSheet = PaymentSheet(paymentIntentClientSecret: setupIntentClientSecret, configuration: configuration)
+        self.paymentSheet = PaymentSheet(paymentIntentClientSecret: "pi_3PtWImFFnzOLXQSo1ym7QSAr_secret_v417swG50my3ZtnHzmXjJefHl", configuration: configuration)
         // } else {
         //     self.paymentSheet = PaymentSheet(setupIntentClientSecret: setupIntentClientSecret, configuration: configuration)
         // }
