@@ -50,10 +50,11 @@ import StripePaymentSheet
         configuration.defaultBillingDetails.name = billingName
         
         configuration.billingDetailsCollectionConfiguration.name = .always
-        configuration.billingDetailsCollectionConfiguration.address = .automatic
+        configuration.billingDetailsCollectionConfiguration.address = .full
 
         var appearance = PaymentSheet.Appearance()
         appearance.colors.primary = UIColor(red: 214/255, green: 128/255, blue: 33/255, alpha: 1)
+        appearance.primaryButton.textColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         configuration.appearance = appearance
 
         if paymentIntentClientSecret != "" {
