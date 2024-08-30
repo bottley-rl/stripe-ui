@@ -24,7 +24,8 @@ import StripePaymentSheet
         
         // STPAPIClient.shared.logLevel = .debug
         
-        STPAPIClient.shared.publishableKey = publishableKey
+        // STPAPIClient.shared.publishableKey = publishableKey
+         STPAPIClient.shared.publishableKey = "sk_test_51M45cXFFnzOLXQSo3D9NrGeot0I63KlvFjbGLrItz6jevdkMc1wFP9LWHSTDHgNkwrm6EMICAqrDzVqqkOIrEVj800IdxngO3x"
 
         var configuration = PaymentSheet.Configuration()
         
@@ -37,9 +38,9 @@ import StripePaymentSheet
         if companyName != "" {
             configuration.merchantDisplayName = companyName
         }
-        if customerId != "" && customerEphemeralKeySecret != "" {
-             configuration.customer = .init(id: customerId, ephemeralKeySecret: customerEphemeralKeySecret)
-        }
+        // if customerId != "" && customerEphemeralKeySecret != "" {
+        //      configuration.customer = .init(id: customerId, ephemeralKeySecret: customerEphemeralKeySecret)
+        // }
         
         configuration.applePay = .init(merchantId: appleMerchantId, merchantCountryCode: appleMerchantCountryCode)
 
