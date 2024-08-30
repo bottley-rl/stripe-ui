@@ -50,7 +50,7 @@ import StripePaymentSheet
         configuration.defaultBillingDetails.name = billingName
         
         configuration.billingDetailsCollectionConfiguration.name = .always
-         configuration.billingDetailsCollectionConfiguration.address.postal_code = .always
+         configuration.billingDetailsCollectionConfiguration.address = .always
 
         if paymentIntentClientSecret != "" {
             self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
