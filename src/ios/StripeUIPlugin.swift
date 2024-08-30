@@ -1,5 +1,4 @@
 import UIKit
-import Stripe
 import StripePaymentSheet
 
 @objc(StripeUIPlugin) class StripeUIPlugin : CDVPlugin {
