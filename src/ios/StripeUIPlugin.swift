@@ -22,7 +22,7 @@ import Stripe
         let billingEmail = (billingConfig["billingEmail"] ?? "") as? String ?? ""
         let billingName = (billingConfig["billingName"] ?? "") as? String ?? ""
         
-        STPAPIClient.shared.logLevel = .debug
+        // STPAPIClient.shared.logLevel = .debug
         
         STPAPIClient.shared.publishableKey = publishableKey
 
@@ -77,7 +77,7 @@ import Stripe
 
     @objc(confirmSetupIntent:)
     func confirmSetupIntent(command: CDVInvokedUrlCommand) {
-        STPAPIClient.shared.logLevel = .debug
+        // STPAPIClient.shared.logLevel = .debug
         let paymentConfig = (command.argument(at: 0) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
         let setupIntentClientSecret = (paymentConfig["setupIntentClientSecret"] ?? "") as? String ?? ""
         let publishableKey = (paymentConfig["publishableKey"] ?? "") as? String ?? ""
