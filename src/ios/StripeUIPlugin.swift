@@ -24,8 +24,7 @@ import StripePaymentSheet
         
         // STPAPIClient.shared.logLevel = .debug
         
-        // STPAPIClient.shared.publishableKey = publishableKey
-         STPAPIClient.shared.publishableKey = "sk_test_51M45cXFFnzOLXQSo3D9NrGeot0I63KlvFjbGLrItz6jevdkMc1wFP9LWHSTDHgNkwrm6EMICAqrDzVqqkOIrEVj800IdxngO3x"
+        STPAPIClient.shared.publishableKey = publishableKey
 
         var configuration = PaymentSheet.Configuration()
         
@@ -38,9 +37,9 @@ import StripePaymentSheet
         if companyName != "" {
             configuration.merchantDisplayName = companyName
         }
-        // if customerId != "" && customerEphemeralKeySecret != "" {
-        //      configuration.customer = .init(id: customerId, ephemeralKeySecret: customerEphemeralKeySecret)
-        // }
+        if customerId != "" && customerEphemeralKeySecret != "" {
+             configuration.customer = .init(id: customerId, ephemeralKeySecret: customerEphemeralKeySecret)
+        }
         
         configuration.applePay = .init(merchantId: appleMerchantId, merchantCountryCode: appleMerchantCountryCode)
 
@@ -57,11 +56,11 @@ import StripePaymentSheet
         appearance.primaryButton.textColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         configuration.appearance = appearance
 
-        // if paymentIntentClientSecret != "" {
-        self.paymentSheet = PaymentSheet(paymentIntentClientSecret: "pi_3PtWImFFnzOLXQSo1ym7QSAr_secret_v417swG50my3ZtnHzmXjJefHl", configuration: configuration)
-        // } else {
-        //     self.paymentSheet = PaymentSheet(setupIntentClientSecret: setupIntentClientSecret, configuration: configuration)
-        // }
+        if paymentIntentClientSecret != "" {
+            self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
+        } else {
+            self.paymentSheet = PaymentSheet(setupIntentClientSecret: setupIntentClientSecret, configuration: configuration)
+        }
 
         paymentSheet?.present(from: self.viewController) { paymentResult in
             switch paymentResult {
