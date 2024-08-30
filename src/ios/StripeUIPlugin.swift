@@ -48,9 +48,10 @@ import StripePaymentSheet
         configuration.allowsDelayedPaymentMethods = true
         configuration.defaultBillingDetails.email = billingEmail
         configuration.defaultBillingDetails.name = billingName
+        configuration.defaultBillingDetails.address.country = "US"
         
         configuration.billingDetailsCollectionConfiguration.name = .always
-        configuration.billingDetailsCollectionConfiguration.address = .full
+        configuration.billingDetailsCollectionConfiguration.address = .automatic
 
         var appearance = PaymentSheet.Appearance()
         appearance.colors.primary = UIColor(red: 214/255, green: 128/255, blue: 33/255, alpha: 1)
