@@ -6,6 +6,7 @@ import Stripe
     @objc(presentPaymentSheet:)
     func presentPaymentSheet(command: CDVInvokedUrlCommand){
         let paymentConfig = (command.argument(at: 0) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
+        let billingConfig = (command.argument(at: 1) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
         let publishableKey = (paymentConfig["publishableKey"] ?? "") as? String ?? ""
         let companyName = (paymentConfig["companyName"] ?? "") as? String ?? ""
         let paymentIntentClientSecret = (paymentConfig["paymentIntentClientSecret"] ?? "") as? String ?? ""
@@ -16,6 +17,13 @@ import Stripe
         let appleMerchantCountryCode = (paymentConfig["appleMerchantCountryCode"] ?? "") as? String ?? ""
         let mobilePayEnabled = (paymentConfig["mobilePayEnabled"] ?? false) as? Bool ?? false
         let returnURL = (paymentConfig["returnURL"] ?? "") as? String ?? ""
+
+
+        let billingEmail = (billingConfig["billingEmail"] ?? "") as? String ?? ""
+        let billingName = (billingConfig["billingName"] ?? "") as? String ?? ""
+        
+        STPAPIClient.shared.logLevel = .debug
+        
         STPAPIClient.shared.publishableKey = publishableKey
 
         var configuration = PaymentSheet.Configuration()
@@ -36,6 +44,9 @@ import Stripe
         }
 
         configuration.allowsDelayedPaymentMethods = true
+        configuration.defaultBillingDetails.email = billingEmail
+        configuration.defaultBillingDetails.name = billingName
+        configuration.billingDetailsCollectionConfiguration.name = .always
 
         print("paymentIntentClientSecret:", paymentIntentClientSecret)
 
@@ -67,6 +78,7 @@ import Stripe
 
     @objc(confirmSetupIntent:)
     func confirmSetupIntent(command: CDVInvokedUrlCommand) {
+        STPAPIClient.shared.logLevel = .debug
         let paymentConfig = (command.argument(at: 0) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
         let setupIntentClientSecret = (paymentConfig["setupIntentClientSecret"] ?? "") as? String ?? ""
         let publishableKey = (paymentConfig["publishableKey"] ?? "") as? String ?? ""
@@ -83,7 +95,7 @@ import Stripe
             return
         }
 
-         STPAPIClient.shared.publishableKey = publishableKey
+        STPAPIClient.shared.publishableKey = publishableKey
 
         let setupIntentParams = STPSetupIntentConfirmParams(clientSecret: setupIntentClientSecret)
         
