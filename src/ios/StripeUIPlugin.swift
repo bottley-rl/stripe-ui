@@ -49,7 +49,7 @@ import Stripe
         configuration.defaultBillingDetails.email = billingEmail
         configuration.defaultBillingDetails.name = billingName
         
-        // configuration.billingDetailsCollectionConfiguration.name = .always
+        configuration.billingDetailsCollectionConfiguration.name = .always
 
         if paymentIntentClientSecret != "" {
             self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
