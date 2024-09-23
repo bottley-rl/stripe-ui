@@ -5,8 +5,9 @@ import StripePaymentSheet
     var paymentSheet: PaymentSheet?
     @objc(presentPaymentSheet:)
     func presentPaymentSheet(command: CDVInvokedUrlCommand){
+
+        // Payment Configuration Details
         let paymentConfig = (command.argument(at: 0) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
-        let billingConfig = (command.argument(at: 1) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
         let publishableKey = (paymentConfig["publishableKey"] ?? "") as? String ?? ""
         let companyName = (paymentConfig["companyName"] ?? "") as? String ?? ""
         let paymentIntentClientSecret = (paymentConfig["paymentIntentClientSecret"] ?? "") as? String ?? ""
@@ -18,18 +19,19 @@ import StripePaymentSheet
         let mobilePayEnabled = (paymentConfig["mobilePayEnabled"] ?? false) as? Bool ?? false
         let returnURL = (paymentConfig["returnURL"] ?? "") as? String ?? ""
 
-
+        // Customer Billing Details
+        let billingConfig = (command.argument(at: 1) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
         let billingEmail = (billingConfig["billingEmail"] ?? "") as? String ?? ""
         let billingName = (billingConfig["billingName"] ?? "") as? String ?? ""
-        
-        // STPAPIClient.shared.logLevel = .debug
         
         STPAPIClient.shared.publishableKey = publishableKey
 
         var configuration = PaymentSheet.Configuration()
         
+        // Currently dark mode not supported
         configuration.style = .alwaysLight
 
+        // Deeplink return URL after bank / 3rd party auth
         if returnURL != "" {
             configuration.returnURL = returnURL
         }
@@ -51,11 +53,15 @@ import StripePaymentSheet
         configuration.billingDetailsCollectionConfiguration.name = .always
         configuration.billingDetailsCollectionConfiguration.address = .automatic
 
+        // Payment Sheet UI
         var appearance = PaymentSheet.Appearance()
         appearance.colors.primary = UIColor(red: 214/255, green: 128/255, blue: 33/255, alpha: 1)
         appearance.primaryButton.textColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         configuration.appearance = appearance
 
+        /*
+            Need to support both PaymentIntent API & SetupIntent API 
+        */
         if paymentIntentClientSecret != "" {
             self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
         } else {
@@ -82,14 +88,9 @@ import StripePaymentSheet
 
     @objc(confirmSetupIntent:)
     func confirmSetupIntent(command: CDVInvokedUrlCommand) {
-        // STPAPIClient.shared.logLevel = .debug
         let paymentConfig = (command.argument(at: 0) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
         let setupIntentClientSecret = (paymentConfig["setupIntentClientSecret"] ?? "") as? String ?? ""
         let publishableKey = (paymentConfig["publishableKey"] ?? "") as? String ?? ""
-
-        print("Payment Config: \(paymentConfig)")
-        print("SetupIntent Client Secret: \(setupIntentClientSecret)")
-        print("Publishable Key: \(publishableKey)")
 
         // Check if the setupIntentClientSecret and publishableKey are not empty
         if setupIntentClientSecret.isEmpty || publishableKey.isEmpty {
@@ -110,7 +111,6 @@ import StripePaymentSheet
                 self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
                 return
             }
-            print("SetupIntent Response: \(String(describing: setupIntent))")
             
             if let paymentMethodID = setupIntent?.paymentMethodID {
                 let message = ["code": "0", "message": "SETUP_INTENT_CONFIRMED", "paymentMethodID": paymentMethodID] as [AnyHashable: Any]
