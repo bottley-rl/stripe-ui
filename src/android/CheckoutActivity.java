@@ -73,41 +73,13 @@ public class CheckoutActivity extends AppCompatActivity {
                     primary = Color(red = 214, green = 128, blue = 33),
                     surface = Color.White,
                     component = Color(red = 214, green = 128, blue = 33),
-                    // componentBorder = Color.Transparent,
-                    // componentDivider = Color.Black,
-                    // onComponent = Color.Black,
-                    // subtitle = Color.Black,
-                    // placeholderText = Color(red = 115, green = 117, blue = 123),
-                    // onSurface = Color.Black,
-                    // appBarIcon = Color.Black,
-                    // error = Color.Red,
                 ),
                 colorsDark = PaymentSheet.Colors(
                     primary = Color(red = 214, green = 128, blue = 33),
                     surface = Color.White,
                     component = Color(red = 214, green = 128, blue = 33),
-                    // componentBorder = Color.Transparent,
-                    // componentDivider = Color.Black,
-                    // onComponent = Color.Black,
-                    // subtitle = Color.Black,
-                    // placeholderText = Color(red = 115, green = 117, blue = 123),
-                    // onSurface = Color.Black,
-                    // appBarIcon = Color.Black,
-                    // error = Color.Red,
-                )
-                // shapes = PaymentSheet.Shapes(
-                //     cornerRadiusDp = 12.0f,
-                //     borderStrokeWidthDp = 0.5f
-                // ),
-                // typography = PaymentSheet.Typography.default.copy(
-                //     fontResId = R.font.avenir_next
-                // ),
-                // primaryButton = PaymentSheet.PrimaryButton(
-                //     shape = PaymentSheet.PrimaryButtonShape(
-                //         cornerRadiusDp = 20f
-                //     ),
-                // )
-            )
+                ),
+            );
 
             Log.d("CheckoutActivity", "paymentSheet");
 
