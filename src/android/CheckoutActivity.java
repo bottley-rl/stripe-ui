@@ -73,18 +73,8 @@ public class CheckoutActivity extends AppCompatActivity {
             PaymentSheet.Appearance appearance = new PaymentSheet.Appearance(
                 new PaymentSheet.Colors(Color.rgb(214, 128, 33), Color.rgb(255, 255, 255), Color.rgb(214, 128, 33)),
                 new PaymentSheet.Colors(Color.rgb(214, 128, 33), Color.rgb(255, 255, 255), Color.rgb(214, 128, 33)),
-                new PaymentSheet.Shapes(
-                    12.0f,   // Corner radius
-                    0.5f     // Border stroke width
-                ),
-                PaymentSheet.Typography.default.copy(
-                    R.font.avenir_next  // Custom font
-                ),
-                new PaymentSheet.PrimaryButton(
-                    new PaymentSheet.PrimaryButtonShape(
-                        20f  // Corner radius
-                    )
-                )
+                new PaymentSheet.Shapes(12.0f, 0.5f),
+                new PaymentSheet.PrimaryButton(new PaymentSheet.PrimaryButtonShape(20f))
             );
 
             Log.d("CheckoutActivity", "paymentSheet");
