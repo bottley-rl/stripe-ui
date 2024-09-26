@@ -68,18 +68,19 @@ public class CheckoutActivity extends AppCompatActivity {
 
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
 
-            val appearance = PaymentSheet.Appearance(
-                colorsLight = PaymentSheet.Colors(
-                    primary = Color(red = 214, green = 128, blue = 33),
-                    surface = Color.White,
-                    component = Color(red = 214, green = 128, blue = 33),
-                ),
-                colorsDark = PaymentSheet.Colors(
-                    primary = Color(red = 214, green = 128, blue = 33),
-                    surface = Color.White,
-                    component = Color(red = 214, green = 128, blue = 33),
-                ),
+            PaymentSheet.Colors colorsLight = new PaymentSheet.Colors(
+                primary = Color(red = 214, green = 128, blue = 33),
+                surface = Color.White,
+                component = Color(red = 214, green = 128, blue = 33),
             );
+
+            PaymentSheet.Colors colorsDark = new PaymentSheet.Colors(
+                primary = Color(red = 214, green = 128, blue = 33),
+                surface = Color.White,
+                component = Color(red = 214, green = 128, blue = 33),
+            );
+
+            PaymentSheet.Appearance appearance = new PaymentSheet.Appearance(colorsLight, colorsDark);
 
             Log.d("CheckoutActivity", "paymentSheet");
 
