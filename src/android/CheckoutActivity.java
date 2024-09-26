@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.stripe.android.PaymentConfiguration;
 import com.stripe.android.paymentsheet.PaymentSheet;
 import com.stripe.android.paymentsheet.PaymentSheetResult;
+import com.stripe.android.paymentsheet.Appearance;
 
 import java.util.HashMap;
 import android.util.Log;
@@ -66,6 +67,7 @@ public class CheckoutActivity extends AppCompatActivity {
             PaymentConfiguration.init(this, publishableKey);
 
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
+            configurePaymentSheet();
 
             Log.d("CheckoutActivity", "paymentSheet");
 
@@ -89,7 +91,7 @@ public class CheckoutActivity extends AppCompatActivity {
             Log.d("CheckoutActivity", "configuration");
 
             if (paymentIntent == null) {
-                 Log.d("CheckoutActivity", "paymentIntent equals null type ");
+                 Log.d("CheckoutActivity", "paymentIntent equals null type");
             }
 
             if (paymentIntent.equals("null")) {
@@ -119,6 +121,32 @@ public class CheckoutActivity extends AppCompatActivity {
             setResult(RESULT_OK, resultIntent);
             finish();
         }
+    }
+
+    private void configurePaymentSheet() {
+        // Create an instance of Appearance
+        Appearance appearance = new Appearance.Builder()
+                .setColorsLight(new PaymentSheet.Colors(
+                        Color.rgb(214, 128, 33), // Primary color
+                        Color.WHITE // Background color
+                ))
+                .setColorsDark(new PaymentSheet.Colors(
+                        Color.rgb(214, 128, 33), // Primary color for dark mode
+                        Color.WHITE // Background color for dark mode
+                ))
+                .setPrimaryButton(new PaymentSheet.PrimaryButton(
+                        Color.WHITE // Text color for the primary button
+                ))
+                .build();
+
+        // Configure the Payment Sheet
+        PaymentSheet.Configuration configuration = new PaymentSheet.Configuration.Builder()
+                .setAppearance(appearance)
+                // Set other configurations like merchant name, etc.
+                .build();
+
+        // Present the Payment Sheet with the configured appearance
+        paymentSheet.presentWithPaymentIntent(paymentIntentClientSecret, configuration);
     }
 
     private void onPaymentSheetResult(final PaymentSheetResult paymentSheetResult) {
