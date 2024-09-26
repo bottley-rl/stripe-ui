@@ -5,11 +5,7 @@ import android.content.Intent;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class StripeUIPlugin extends CordovaPlugin {
     private CallbackContext callback;
@@ -38,8 +34,8 @@ public class StripeUIPlugin extends CordovaPlugin {
                 String companyName = paymentConfig.getString("companyName");
                 String paymentIntent = paymentConfig.optString("paymentIntentClientSecret");
                 String setupIntent = paymentConfig.optString("setupIntentClientSecret");
-                String customerId = paymentConfig.getString("customerId");
-                String ephemeralKey = paymentConfig.getString("customerEphemeralKeySecret");
+                String customerId = paymentConfig.optString("customerId", null);
+                String ephemeralKey = paymentConfig.optString("customerEphemeralKeySecret", null);
                 String appleMerchantCountryCode = paymentConfig.getString("appleMerchantCountryCode");
                 boolean mobilePayEnabled = paymentConfig.getBoolean("mobilePayEnabled");
 
@@ -82,25 +78,5 @@ public class StripeUIPlugin extends CordovaPlugin {
                 callbackContext.error(e.getMessage());
             }
         });
-    }
-
-    private JSONObject mapToJSON(HashMap<String, String> map) {
-        JSONObject message = new JSONObject();
-        for (Map.Entry<String, String> pairs : map.entrySet()) {
-            try {
-                message.put(pairs.getKey(), pairs.getValue());
-            } catch (JSONException ignored) {
-            }
-        }
-        return message;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == -1) {
-            HashMap<String, String> resultMap = (HashMap<String, String>) data.getSerializableExtra("result");
-            callback.success(resultMap != null ? mapToJSON(resultMap).toString() : "OK");
-        }
     }
 }

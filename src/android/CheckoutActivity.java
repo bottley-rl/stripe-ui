@@ -21,7 +21,7 @@ public class CheckoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         resultMap.clear();
         Intent receivedIntent = getIntent();
-        
+
         String publishableKey = receivedIntent.getStringExtra("publishableKey");
         String companyName = receivedIntent.getStringExtra("companyName");
         String paymentIntent = receivedIntent.getStringExtra("paymentIntent");
@@ -29,8 +29,8 @@ public class CheckoutActivity extends AppCompatActivity {
         String customerId = receivedIntent.getStringExtra("customerId");
         String ephemeralKey = receivedIntent.getStringExtra("ephemeralKey");
         String appleMerchantCountryCode = receivedIntent.getStringExtra("appleMerchantCountryCode");
-        
-        // Billing details
+
+        // Billing details as before
         String billingEmail = receivedIntent.getStringExtra("billingEmail");
         String billingName = receivedIntent.getStringExtra("billingName");
         String billingPhone = receivedIntent.getStringExtra("billingPhone");
@@ -45,13 +45,17 @@ public class CheckoutActivity extends AppCompatActivity {
 
         try {
             assert publishableKey != null;
-            
+            assert companyName != null;
             PaymentConfiguration.init(this, publishableKey);
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
 
             PaymentSheet.Address billingAddress = new PaymentSheet.Address(billingCity, billingCountry, billingLine1, billingLine2, billingPostalCode, billingState);
             PaymentSheet.BillingDetails billingDetails = new PaymentSheet.BillingDetails(billingAddress, billingEmail, billingName, billingPhone);
-            PaymentSheet.CustomerConfiguration customerConfig = new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey);
+
+            // Only create customer configuration if both customerId and ephemeralKey are provided
+            PaymentSheet.CustomerConfiguration customerConfig = (customerId != null && !customerId.isEmpty() && ephemeralKey != null && !ephemeralKey.isEmpty()) 
+                ? new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey)
+                : null;
 
             PaymentSheet.GooglePayConfiguration googlePayConfig = mobilePayEnabled
                     ? new PaymentSheet.GooglePayConfiguration(PaymentSheet.GooglePayConfiguration.Environment.Production, appleMerchantCountryCode)
@@ -61,7 +65,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
             if (paymentIntent != null) {
                 paymentSheet.presentWithPaymentIntent(paymentIntent, configuration);
-            } else if (setupIntent != null) { // Check if SetupIntent is present
+            } else if (setupIntent != null) {
                 paymentSheet.presentWithSetupIntent(setupIntent, configuration);
             }
 
