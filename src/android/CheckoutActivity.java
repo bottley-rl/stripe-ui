@@ -11,6 +11,7 @@ import com.stripe.android.paymentsheet.*;
 
 import java.util.HashMap;
 import android.util.Log;
+import android.graphics.Color;
 
 public class CheckoutActivity extends AppCompatActivity {
     Intent resultIntent = new Intent();
@@ -66,11 +67,25 @@ public class CheckoutActivity extends AppCompatActivity {
 
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
 
-            PaymentSheet.Colors colorsLight = new PaymentSheet.Colors(new Color(214, 128, 33), new Color(255, 255, 255), new Color(214, 128, 33));
 
             PaymentSheet.Colors colorsDark = new PaymentSheet.Colors(new Color(214, 128, 33),  new Color(255, 255, 255), new Color(214, 128, 33));
 
-            PaymentSheet.Appearance appearance = new PaymentSheet.Appearance(colorsLight, colorsDark, null, null, null);
+            PaymentSheet.Appearance appearance = new PaymentSheet.Appearance(
+                new PaymentSheet.Colors(Color.rgb(214, 128, 33), Color.rgb(255, 255, 255), Color.rgb(214, 128, 33)),
+                new PaymentSheet.Colors(Color.rgb(214, 128, 33), Color.rgb(255, 255, 255), Color.rgb(214, 128, 33)),
+                new PaymentSheet.Shapes(
+                    12.0f,   // Corner radius
+                    0.5f     // Border stroke width
+                ),
+                PaymentSheet.Typography.default.copy(
+                    R.font.avenir_next  // Custom font
+                ),
+                new PaymentSheet.PrimaryButton(
+                    new PaymentSheet.PrimaryButtonShape(
+                        20f  // Corner radius
+                    )
+                )
+            );
 
             Log.d("CheckoutActivity", "paymentSheet");
 
