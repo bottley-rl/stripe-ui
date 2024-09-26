@@ -88,7 +88,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
             Log.d("CheckoutActivity", "configuration");
 
-            if (paymentIntent != null && !paymentIntent.isEmpty() && paymentIntent != "null") {
+            if (paymentIntent != null && !paymentIntent.isEmpty() && !paymentIntent.equals("null")) {
                 Log.d("CheckoutActivity", "paymentIntent: " + paymentIntent);
                 paymentSheet.presentWithPaymentIntent(paymentIntent, configuration);
             } else if (setupIntent != null) {
