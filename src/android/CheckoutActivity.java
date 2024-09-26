@@ -25,12 +25,12 @@ public class CheckoutActivity extends AppCompatActivity {
         String publishableKey = receivedIntent.getStringExtra("publishableKey");
         String companyName = receivedIntent.getStringExtra("companyName");
         String paymentIntent = receivedIntent.getStringExtra("paymentIntent");
-        String setupIntent = receivedIntent.getStringExtra("setupIntent"); // Added for SetupIntent support
+        String setupIntent = receivedIntent.getStringExtra("setupIntent");
         String customerId = receivedIntent.getStringExtra("customerId");
         String ephemeralKey = receivedIntent.getStringExtra("ephemeralKey");
         String appleMerchantCountryCode = receivedIntent.getStringExtra("appleMerchantCountryCode");
 
-        // Billing details as before
+        // Billing details
         String billingEmail = receivedIntent.getStringExtra("billingEmail");
         String billingName = receivedIntent.getStringExtra("billingName");
         String billingPhone = receivedIntent.getStringExtra("billingPhone");
@@ -52,7 +52,6 @@ public class CheckoutActivity extends AppCompatActivity {
             PaymentSheet.Address billingAddress = new PaymentSheet.Address(billingCity, billingCountry, billingLine1, billingLine2, billingPostalCode, billingState);
             PaymentSheet.BillingDetails billingDetails = new PaymentSheet.BillingDetails(billingAddress, billingEmail, billingName, billingPhone);
 
-            // Only create customer configuration if both customerId and ephemeralKey are provided
             PaymentSheet.CustomerConfiguration customerConfig = (customerId != null && !customerId.isEmpty() && ephemeralKey != null && !ephemeralKey.isEmpty()) 
                 ? new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey)
                 : null;

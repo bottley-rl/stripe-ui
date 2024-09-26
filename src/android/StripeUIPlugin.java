@@ -50,15 +50,15 @@ public class StripeUIPlugin extends CordovaPlugin {
                 intent.putExtra("mobilePayEnabled", mobilePayEnabled);
 
                 if (billingConfig != null) {
-                    String billingEmail = billingConfig.getString("billingEmail");
-                    String billingName = billingConfig.getString("billingName");
-                    String billingPhone = billingConfig.getString("billingPhone");
-                    String billingCity = billingConfig.getString("billingCity");
-                    String billingCountry = billingConfig.getString("billingCountry");
-                    String billingLine1 = billingConfig.getString("billingLine1");
-                    String billingLine2 = billingConfig.getString("billingLine2");
-                    String billingPostalCode = billingConfig.getString("billingPostalCode");
-                    String billingState = billingConfig.getString("billingState");
+                    String billingEmail = billingConfig.optString("billingEmail", null);
+                    String billingName = billingConfig.optString("billingName", null);
+                    String billingPhone = billingConfig.optString("billingPhone", null);
+                    String billingCity = billingConfig.optString("billingCity", null);
+                    String billingCountry = billingConfig.optString("billingCountry", null);
+                    String billingLine1 = billingConfig.optString("billingLine1", null);
+                    String billingLine2 = billingConfig.optString("billingLine2", null);
+                    String billingPostalCode = billingConfig.optString("billingPostalCode", null);
+                    String billingState = billingConfig.optString("billingState", null);
 
                     intent.putExtra("billingEmail", billingEmail);
                     intent.putExtra("billingName", billingName);
