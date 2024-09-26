@@ -32,8 +32,8 @@ public class StripeUIPlugin extends CordovaPlugin {
                 
                 String publishableKey = paymentConfig.getString("publishableKey");
                 String companyName = paymentConfig.getString("companyName");
-                String paymentIntent = paymentConfig.optString("paymentIntentClientSecret");
-                String setupIntent = paymentConfig.optString("setupIntentClientSecret");
+                String paymentIntent = paymentConfig.optString("paymentIntentClientSecret", null);
+                String setupIntent = paymentConfig.optString("setupIntentClientSecret", null);
                 String customerId = paymentConfig.optString("customerId", null);
                 String ephemeralKey = paymentConfig.optString("customerEphemeralKeySecret", null);
                 String appleMerchantCountryCode = paymentConfig.getString("appleMerchantCountryCode");
