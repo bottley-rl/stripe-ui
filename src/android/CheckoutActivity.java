@@ -88,6 +88,18 @@ public class CheckoutActivity extends AppCompatActivity {
 
             Log.d("CheckoutActivity", "configuration");
 
+            if (paymentIntent == null) {
+                 Log.d("CheckoutActivity", "paymentIntent equals null type ");
+            }
+
+            if (paymentIntent.equals("null")) {
+                 Log.d("CheckoutActivity", "paymentIntent equals 'null'");
+            }
+
+            if (paymentIntent.isEmpty()) {
+                Log.d("CheckoutActivity", "paymentIntent is empty");
+            }
+
             if (paymentIntent != null && !paymentIntent.isEmpty() && !paymentIntent.equals("null")) {
                 Log.d("CheckoutActivity", "paymentIntent: " + paymentIntent);
                 paymentSheet.presentWithPaymentIntent(paymentIntent, configuration);
