@@ -45,17 +45,15 @@ public class CheckoutActivity extends AppCompatActivity {
 
         try {
             assert publishableKey != null;
-            assert companyName != null;
-            assert customerId != null;
-            assert ephemeralKey != null;
-            assert appleMerchantCountryCode != null;
             
             PaymentConfiguration.init(this, publishableKey);
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
 
             PaymentSheet.Address billingAddress = new PaymentSheet.Address(billingCity, billingCountry, billingLine1, billingLine2, billingPostalCode, billingState);
             PaymentSheet.BillingDetails billingDetails = new PaymentSheet.BillingDetails(billingAddress, billingEmail, billingName, billingPhone);
-            PaymentSheet.CustomerConfiguration customerConfig = new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey);
+            if (customerId != null && ephemeralKey != null) {
+                PaymentSheet.CustomerConfiguration customerConfig = new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey);
+            }
 
             PaymentSheet.GooglePayConfiguration googlePayConfig = mobilePayEnabled
                     ? new PaymentSheet.GooglePayConfiguration(PaymentSheet.GooglePayConfiguration.Environment.Production, appleMerchantCountryCode)
