@@ -10,9 +10,11 @@ import com.stripe.android.PaymentConfiguration;
 import com.stripe.android.paymentsheet.PaymentSheet;
 import com.stripe.android.paymentsheet.PaymentSheetResult;
 
-import com.stripe.android.core.StripeError;
+import com.stripe.android.core.Logger;
+import com.stripe.android.core.DefaultLogger;
 
 import java.util.HashMap;
+import android.util.Log;
 
 public class CheckoutActivity extends AppCompatActivity {
     Intent resultIntent = new Intent();
@@ -49,9 +51,7 @@ public class CheckoutActivity extends AppCompatActivity {
             assert publishableKey != null;
             assert companyName != null;
 
-            PaymentConfiguration.init(this, publishableKey);
-
-            StripeError.setLoggingEnabled(true);
+            PaymentConfiguration.init(this, publishableKey, new DefaultLogger(Logger.Level.VERBOSE));
 
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
 
