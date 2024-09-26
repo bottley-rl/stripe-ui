@@ -91,7 +91,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
             Log.d("CheckoutActivity", "googlePayConfig");
 
-            PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(companyName, appearance, customerConfig, googlePayConfig, null, billingDetails);
+            PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(merchantDisplayName = companyName, customer = customerConfig, googlePay = googlePayConfig, appearance = appearance, defaultBillingDetails = billingDetails);
 
             Log.d("CheckoutActivity", "configuration");
 
