@@ -44,6 +44,21 @@ public class CheckoutActivity extends AppCompatActivity {
 
         boolean mobilePayEnabled = receivedIntent.getBooleanExtra("mobilePayEnabled", false);
 
+        Log.d("CheckoutActivity", "publishableKey: " + publishableKey);
+        Log.d("CheckoutActivity", "companyName: " + companyName);
+        Log.d("CheckoutActivity", "paymentIntent: " + paymentIntent);
+        Log.d("CheckoutActivity", "setupIntent: " + setupIntent);
+        Log.d("CheckoutActivity", "customerId: " + customerId);
+        Log.d("CheckoutActivity", "ephemeralKey: " + ephemeralKey);
+        Log.d("CheckoutActivity", "appleMerchantCountryCode: " + appleMerchantCountryCode);
+        Log.d("CheckoutActivity", "billingEmail: " + billingEmail);
+        Log.d("CheckoutActivity", "billingName: " + billingName);
+        Log.d("CheckoutActivity", "billingPhone: " + billingPhone);
+        Log.d("CheckoutActivity", "billingCity: " + billingCity);
+        Log.d("CheckoutActivity", "billingCountry: " + billingCountry);
+        Log.d("CheckoutActivity", "billingPostalCode: " + billingPostalCode);
+        Log.d("CheckoutActivity", "billingState: " + billingState);
+
         try {
             assert publishableKey != null;
             assert companyName != null;
@@ -73,7 +88,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
             Log.d("CheckoutActivity", "configuration");
 
-            if (paymentIntent != null) {
+            if (paymentIntent != null && !paymentIntent.isEmpty() && paymentIntent != "null") {
                 Log.d("CheckoutActivity", "paymentIntent: " + paymentIntent);
                 paymentSheet.presentWithPaymentIntent(paymentIntent, configuration);
             } else if (setupIntent != null) {
