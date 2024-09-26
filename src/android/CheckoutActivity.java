@@ -51,9 +51,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
             PaymentSheet.Address billingAddress = new PaymentSheet.Address(billingCity, billingCountry, billingLine1, billingLine2, billingPostalCode, billingState);
             PaymentSheet.BillingDetails billingDetails = new PaymentSheet.BillingDetails(billingAddress, billingEmail, billingName, billingPhone);
-            if (customerId != null && ephemeralKey != null) {
-                PaymentSheet.CustomerConfiguration customerConfig = new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey);
-            }
+            PaymentSheet.CustomerConfiguration customerConfig = new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey);
 
             PaymentSheet.GooglePayConfiguration googlePayConfig = mobilePayEnabled
                     ? new PaymentSheet.GooglePayConfiguration(PaymentSheet.GooglePayConfiguration.Environment.Production, appleMerchantCountryCode)
