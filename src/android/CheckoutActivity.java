@@ -66,11 +66,11 @@ public class CheckoutActivity extends AppCompatActivity {
 
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
 
-            PaymentSheet.Colors colorsLight = new PaymentSheet.Colors(primary = new Color(red = 214, green = 128, blue = 33), surface = Color.White, component = new Color(red = 214, green = 128, blue = 33));
+            PaymentSheet.Colors colorsLight = new PaymentSheet.Colors(new Color(214, 128, 33), new Color(255, 255, 255), new Color(214, 128, 33));
 
-            PaymentSheet.Colors colorsDark = new PaymentSheet.Colors(primary = new Color(red = 214, green = 128, blue = 33), surface = Color.White, component = new Color(red = 214, green = 128, blue = 33));
+            PaymentSheet.Colors colorsDark = new PaymentSheet.Colors(new Color(214, 128, 33),  new Color(255, 255, 255), new Color(214, 128, 33));
 
-            PaymentSheet.Appearance appearance = new PaymentSheet.Appearance(colorsLight , colorsDark);
+            PaymentSheet.Appearance appearance = new PaymentSheet.Appearance(colorsLight, colorsDark, null, null, null);
 
             Log.d("CheckoutActivity", "paymentSheet");
 
@@ -89,7 +89,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
             Log.d("CheckoutActivity", "googlePayConfig");
 
-            PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(merchantDisplayName = companyName, customer = customerConfig, googlePay = googlePayConfig, appearance = appearance, defaultBillingDetails = billingDetails);
+            PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(companyName, customerConfig, googlePayConfig, appearance, billingDetails);
 
             Log.d("CheckoutActivity", "configuration");
 
