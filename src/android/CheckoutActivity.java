@@ -67,12 +67,31 @@ public class CheckoutActivity extends AppCompatActivity {
 
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
 
-
-            PaymentSheet.Colors colorsDark = new PaymentSheet.Colors(new Color(214, 128, 33),  new Color(255, 255, 255), new Color(214, 128, 33));
-
             PaymentSheet.Appearance appearance = new PaymentSheet.Appearance(
-                new PaymentSheet.Colors(Color.rgb(214, 128, 33), Color.rgb(255, 255, 255), Color.rgb(214, 128, 33)),
-                new PaymentSheet.Colors(Color.rgb(214, 128, 33), Color.rgb(255, 255, 255), Color.rgb(214, 128, 33)),
+                new PaymentSheet.Colors(
+                    Color.rgb(214, 128, 33), 
+                    Color.rgb(255, 255, 255), 
+                    Color.rgb(214, 128, 33),
+                    Color.TRANSPARENT,
+                    Color.BLACK,
+                    Color.BLACK,         
+                    Color.rgb(115, 117, 123),
+                    Color.BLACK,
+                    Color.BLACK,
+                    Color.RED
+                ),
+                new PaymentSheet.Colors(
+                    Color.rgb(214, 128, 33), 
+                    Color.rgb(255, 255, 255), 
+                    Color.rgb(214, 128, 33),
+                    Color.TRANSPARENT,
+                    Color.BLACK,
+                    Color.BLACK,         
+                    Color.rgb(115, 117, 123),
+                    Color.BLACK,
+                    Color.BLACK,
+                    Color.RED
+                ),
                 new PaymentSheet.Shapes(12.0f, 0.5f),
                 new PaymentSheet.PrimaryButton(new PaymentSheet.PrimaryButtonShape(20f))
             );
