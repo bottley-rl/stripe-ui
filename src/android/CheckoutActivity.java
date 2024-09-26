@@ -10,6 +10,8 @@ import com.stripe.android.PaymentConfiguration;
 import com.stripe.android.paymentsheet.PaymentSheet;
 import com.stripe.android.paymentsheet.PaymentSheetResult;
 
+import com.stripe.android.core.StripeError;
+
 import java.util.HashMap;
 
 public class CheckoutActivity extends AppCompatActivity {
@@ -46,29 +48,46 @@ public class CheckoutActivity extends AppCompatActivity {
         try {
             assert publishableKey != null;
             assert companyName != null;
+
             PaymentConfiguration.init(this, publishableKey);
+
+            StripeError.setLoggingEnabled(true);
+
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
 
-            PaymentSheet.Address billingAddress = new PaymentSheet.Address(billingCity, billingCountry, billingLine1, billingLine2, billingPostalCode, billingState);
-            PaymentSheet.BillingDetails billingDetails = new PaymentSheet.BillingDetails(billingAddress, billingEmail, billingName, billingPhone);
+            Log.d("CheckoutActivity", "paymentSheet");
 
+            PaymentSheet.Address billingAddress = new PaymentSheet.Address(billingCity, billingCountry, billingLine1, billingLine2, billingPostalCode, billingState);
+            Log.d("CheckoutActivity", "Address");
+            PaymentSheet.BillingDetails billingDetails = new PaymentSheet.BillingDetails(billingAddress, billingEmail, billingName, billingPhone);
+            Log.d("CheckoutActivity", "BillingDetails");
             PaymentSheet.CustomerConfiguration customerConfig = (customerId != null && !customerId.isEmpty() && ephemeralKey != null && !ephemeralKey.isEmpty()) 
                 ? new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey)
                 : null;
+            Log.d("CheckoutActivity", "customerConfig");
 
             PaymentSheet.GooglePayConfiguration googlePayConfig = mobilePayEnabled
                     ? new PaymentSheet.GooglePayConfiguration(PaymentSheet.GooglePayConfiguration.Environment.Test, appleMerchantCountryCode)
                     : null;
 
+            Log.d("CheckoutActivity", "googlePayConfig");
+
             PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(companyName, customerConfig, googlePayConfig, null, billingDetails);
 
+            Log.d("CheckoutActivity", "configuration");
+
             if (paymentIntent != null) {
+                Log.d("CheckoutActivity", "paymentIntent: " + paymentIntent);
                 paymentSheet.presentWithPaymentIntent(paymentIntent, configuration);
             } else if (setupIntent != null) {
+                Log.d("CheckoutActivity", "setupIntent: " + setupIntent);
                 paymentSheet.presentWithSetupIntent(setupIntent, configuration);
+            } else {
+                Log.d("CheckoutActivity", "Missing both paymentIntent && setupIntent");
             }
 
         } catch (Exception e) {
+            Log.e("CheckoutActivity", "Error in PaymentSheet initialization", e);
             resultMap.put("code", "2");
             resultMap.put("message", "PAYMENT_FAILED");
             resultMap.put("error", e.getMessage());
