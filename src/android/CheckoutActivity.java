@@ -10,8 +10,8 @@ import com.stripe.android.PaymentConfiguration;
 import com.stripe.android.paymentsheet.PaymentSheet;
 import com.stripe.android.paymentsheet.PaymentSheetResult;
 
-import com.stripe.android.core.Logger;
-import com.stripe.android.core.DefaultLogger;
+import com.stripe.android.core.logger.DefaultLogger;
+import com.stripe.android.core.logger.Logger;
 
 import java.util.HashMap;
 import android.util.Log;
