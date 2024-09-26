@@ -21,13 +21,16 @@ public class CheckoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         resultMap.clear();
         Intent receivedIntent = getIntent();
+        
         String publishableKey = receivedIntent.getStringExtra("publishableKey");
         String companyName = receivedIntent.getStringExtra("companyName");
-        String paymentIntentClientSecret = receivedIntent.getStringExtra("paymentIntentClientSecret");
+        String paymentIntent = receivedIntent.getStringExtra("paymentIntent");
+        String setupIntent = receivedIntent.getStringExtra("setupIntent"); // Added for SetupIntent support
         String customerId = receivedIntent.getStringExtra("customerId");
-        String customerEphemeralKeySecret = receivedIntent.getStringExtra("customerEphemeralKeySecret");
-        String countryCode = receivedIntent.getStringExtra("countryCode");
-        String currencyCode = receivedIntent.getStringExtra("currencyCode");
+        String ephemeralKey = receivedIntent.getStringExtra("ephemeralKey");
+        String appleMerchantCountryCode = receivedIntent.getStringExtra("appleMerchantCountryCode");
+        
+        // Billing details
         String billingEmail = receivedIntent.getStringExtra("billingEmail");
         String billingName = receivedIntent.getStringExtra("billingName");
         String billingPhone = receivedIntent.getStringExtra("billingPhone");
@@ -37,23 +40,35 @@ public class CheckoutActivity extends AppCompatActivity {
         String billingLine2 = receivedIntent.getStringExtra("billingLine2");
         String billingPostalCode = receivedIntent.getStringExtra("billingPostalCode");
         String billingState = receivedIntent.getStringExtra("billingState");
-        boolean mobilePayEnabled = receivedIntent.getBooleanExtra("mobilePayEnabled", true);
-        boolean googlePayProd = receivedIntent.getBooleanExtra("googlePayProd", false);
+
+        boolean mobilePayEnabled = receivedIntent.getBooleanExtra("mobilePayEnabled", false);
+
         try {
             assert publishableKey != null;
-            assert paymentIntentClientSecret != null;
             assert companyName != null;
             assert customerId != null;
-            assert customerEphemeralKeySecret != null;
-            assert countryCode != null;
+            assert ephemeralKey != null;
+            assert appleMerchantCountryCode != null;
+            
             PaymentConfiguration.init(this, publishableKey);
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
+
             PaymentSheet.Address billingAddress = new PaymentSheet.Address(billingCity, billingCountry, billingLine1, billingLine2, billingPostalCode, billingState);
             PaymentSheet.BillingDetails billingDetails = new PaymentSheet.BillingDetails(billingAddress, billingEmail, billingName, billingPhone);
-            PaymentSheet.CustomerConfiguration customerConfig = new PaymentSheet.CustomerConfiguration(customerId, customerEphemeralKeySecret);
-            PaymentSheet.GooglePayConfiguration googlePayConfig = mobilePayEnabled ? new PaymentSheet.GooglePayConfiguration(googlePayProd ? PaymentSheet.GooglePayConfiguration.Environment.Production : PaymentSheet.GooglePayConfiguration.Environment.Test, countryCode, currencyCode) : null;
+            PaymentSheet.CustomerConfiguration customerConfig = new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey);
+
+            PaymentSheet.GooglePayConfiguration googlePayConfig = mobilePayEnabled
+                    ? new PaymentSheet.GooglePayConfiguration(PaymentSheet.GooglePayConfiguration.Environment.Production, appleMerchantCountryCode)
+                    : null;
+
             PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(companyName, customerConfig, googlePayConfig, null, billingDetails);
-            paymentSheet.presentWithPaymentIntent(paymentIntentClientSecret, configuration);
+
+            if (paymentIntent != null) {
+                paymentSheet.presentWithPaymentIntent(paymentIntent, configuration);
+            } else if (setupIntent != null) { // Check if SetupIntent is present
+                paymentSheet.presentWithSetupIntent(setupIntent, configuration);
+            }
+
         } catch (Exception e) {
             resultMap.put("code", "2");
             resultMap.put("message", "PAYMENT_FAILED");
