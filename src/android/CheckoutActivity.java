@@ -48,7 +48,7 @@ public class CheckoutActivity extends AppCompatActivity {
             assert publishableKey != null;
             assert companyName != null;
 
-            PaymentConfiguration.init(this, publishableKey, enableLogging = true);
+            PaymentConfiguration.init(this, publishableKey);
 
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
 
