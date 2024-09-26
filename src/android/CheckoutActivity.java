@@ -67,7 +67,47 @@ public class CheckoutActivity extends AppCompatActivity {
             PaymentConfiguration.init(this, publishableKey);
 
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
-            configurePaymentSheet();
+
+            val appearance = PaymentSheet.Appearance(
+                colorsLight = PaymentSheet.Colors(
+                    primary = Color(red = 214, green = 128, blue = 33),
+                    surface = Color.White,
+                    component = Color(red = 214, green = 128, blue = 33),
+                    // componentBorder = Color.Transparent,
+                    // componentDivider = Color.Black,
+                    // onComponent = Color.Black,
+                    // subtitle = Color.Black,
+                    // placeholderText = Color(red = 115, green = 117, blue = 123),
+                    // onSurface = Color.Black,
+                    // appBarIcon = Color.Black,
+                    // error = Color.Red,
+                ),
+                colorsDark = PaymentSheet.Colors(
+                    primary = Color(red = 214, green = 128, blue = 33),
+                    surface = Color.White,
+                    component = Color(red = 214, green = 128, blue = 33),
+                    // componentBorder = Color.Transparent,
+                    // componentDivider = Color.Black,
+                    // onComponent = Color.Black,
+                    // subtitle = Color.Black,
+                    // placeholderText = Color(red = 115, green = 117, blue = 123),
+                    // onSurface = Color.Black,
+                    // appBarIcon = Color.Black,
+                    // error = Color.Red,
+                )
+                // shapes = PaymentSheet.Shapes(
+                //     cornerRadiusDp = 12.0f,
+                //     borderStrokeWidthDp = 0.5f
+                // ),
+                // typography = PaymentSheet.Typography.default.copy(
+                //     fontResId = R.font.avenir_next
+                // ),
+                // primaryButton = PaymentSheet.PrimaryButton(
+                //     shape = PaymentSheet.PrimaryButtonShape(
+                //         cornerRadiusDp = 20f
+                //     ),
+                // )
+            )
 
             Log.d("CheckoutActivity", "paymentSheet");
 
@@ -86,7 +126,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
             Log.d("CheckoutActivity", "googlePayConfig");
 
-            PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(companyName, customerConfig, googlePayConfig, null, billingDetails);
+            PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(companyName, appearance, customerConfig, googlePayConfig, null, billingDetails);
 
             Log.d("CheckoutActivity", "configuration");
 
@@ -121,32 +161,6 @@ public class CheckoutActivity extends AppCompatActivity {
             setResult(RESULT_OK, resultIntent);
             finish();
         }
-    }
-
-    private void configurePaymentSheet() {
-        // Create an instance of Appearance
-        Appearance appearance = new Appearance.Builder()
-                .setColorsLight(new PaymentSheet.Colors(
-                        Color.rgb(214, 128, 33), // Primary color
-                        Color.WHITE // Background color
-                ))
-                .setColorsDark(new PaymentSheet.Colors(
-                        Color.rgb(214, 128, 33), // Primary color for dark mode
-                        Color.WHITE // Background color for dark mode
-                ))
-                .setPrimaryButton(new PaymentSheet.PrimaryButton(
-                        Color.WHITE // Text color for the primary button
-                ))
-                .build();
-
-        // Configure the Payment Sheet
-        PaymentSheet.Configuration configuration = new PaymentSheet.Configuration.Builder()
-                .setAppearance(appearance)
-                // Set other configurations like merchant name, etc.
-                .build();
-
-        // Present the Payment Sheet with the configured appearance
-        paymentSheet.presentWithPaymentIntent(paymentIntentClientSecret, configuration);
     }
 
     private void onPaymentSheetResult(final PaymentSheetResult paymentSheetResult) {
