@@ -68,31 +68,33 @@ public class CheckoutActivity extends AppCompatActivity {
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
 
             PaymentSheet.Appearance appearance = new PaymentSheet.Appearance(
+                // Light Mode
                 new PaymentSheet.Colors(
-                    Color.rgb(214, 128, 33), // @ColorInt val primary: Int, 
-                    Color.rgb(255, 255, 255), //  @ColorInt val surface: Int, 
-                    Color.rgb(214, 128, 33), //   @ColorInt val component: Int, 
-                    Color.TRANSPARENT, //  @ColorInt val componentBorder: Int, 
-                    Color.BLACK, //  @ColorInt val componentDivider: Int, 
-                    Color.BLACK, //  @ColorInt val onComponent: Int,         
-                    Color.rgb(115, 117, 123), // @ColorInt val onSurface: Int, 
-                    Color.BLACK, // @ColorInt val subtitle: Int, 
-                    Color.GREY, // @ColorInt val placeholderText: Int, 
-                    Color.rgb(214, 128, 33, //  @ColorInt val appBarIcon: Int, 
-                    Color.RED //  @ColorInt val error: Int
-                ),
+                    Color.rgb(214, 128, 33), // primary 
+                    Color.rgb(255, 255, 255), // surface
+                    Color.rgb(214, 128, 33), // component
+                    Color.TRANSPARENT, // componentBorder
+                    Color.BLACK, // componentDivider
+                    Color.BLACK, // onComponent  
+                    Color.rgb(115, 117, 123), // onSurface
+                    Color.BLACK, // subtitle
+                    Color.GREY, // placeholderText
+                    Color.rgb(214, 128, 33), // appBarIcon
+                    Color.RED // error
+                ), 
+                // Dark Mode
                 new PaymentSheet.Colors(
-                    Color.rgb(214, 128, 33), // @ColorInt val primary: Int, 
-                    Color.rgb(255, 255, 255), //  @ColorInt val surface: Int, 
-                    Color.rgb(214, 128, 33), //   @ColorInt val component: Int, 
-                    Color.TRANSPARENT, //  @ColorInt val componentBorder: Int, 
-                    Color.BLACK, //  @ColorInt val componentDivider: Int, 
-                    Color.BLACK, //  @ColorInt val onComponent: Int,         
-                    Color.rgb(115, 117, 123), // @ColorInt val onSurface: Int, 
-                    Color.BLACK, // @ColorInt val subtitle: Int, 
-                    Color.GREY, // @ColorInt val placeholderText: Int, 
-                    Color.rgb(214, 128, 33, //  @ColorInt val appBarIcon: Int, 
-                    Color.RED //  @ColorInt val error: Int
+                    Color.rgb(214, 128, 33), // primary 
+                    Color.rgb(255, 255, 255), // surface
+                    Color.rgb(214, 128, 33), // component
+                    Color.TRANSPARENT, // componentBorder
+                    Color.BLACK, // componentDivider
+                    Color.BLACK, // onComponent  
+                    Color.rgb(115, 117, 123), // onSurface
+                    Color.BLACK, // subtitle
+                    Color.GREY, // placeholderText
+                    Color.rgb(214, 128, 33), // appBarIcon
+                    Color.RED // error
                 ),
                 new PaymentSheet.Shapes(12.0f, 0.5f),
                 new PaymentSheet.PrimaryButton(new PaymentSheet.PrimaryButtonShape(20f))
