@@ -97,7 +97,18 @@ public class CheckoutActivity extends AppCompatActivity {
                     Color.RED // error
                 ),
                 new PaymentSheet.Shapes(12.0f, 0.5f),
-                new PaymentSheet.PrimaryButton(new PaymentSheet.PrimaryButtonShape(20f, 2f))
+                    new PaymentSheet.PrimaryButton(
+                        new PaymentSheet.PrimaryButtonColors(
+                            Color.rgb(214, 128, 33), 
+                            Color.rgb(255, 255, 255)
+                        ),
+                    new PaymentSheet.PrimaryButtonColors(
+                        Color.rgb(214, 128, 33),
+                        Color.rgb(200, 200, 200) 
+                    ),
+                    new PaymentSheet.PrimaryButtonShape(20f, 2f),
+                    PaymentSheet.PrimaryButtonTypography.Companion.getDefault()
+                )
             );
 
             Log.d("CheckoutActivity", "paymentSheet");
