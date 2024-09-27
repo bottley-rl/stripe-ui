@@ -105,7 +105,7 @@ public class CheckoutActivity extends AppCompatActivity {
                         Color.rgb(255, 255, 255),
                         Color.rgb(214, 128, 33),
                         Color.rgb(45, 211, 111),
-                        Color.rgb(255, 255, 255),
+                        Color.rgb(255, 255, 255)
                     ),
                     // Dark Mode
                     new PaymentSheet.PrimaryButtonColors(
@@ -113,7 +113,7 @@ public class CheckoutActivity extends AppCompatActivity {
                         Color.rgb(255, 255, 255),
                         Color.rgb(214, 128, 33),
                         Color.rgb(45, 211, 111),
-                        Color.rgb(255, 255, 255),
+                        Color.rgb(255, 255, 255)
                     ),
                     new PaymentSheet.PrimaryButtonShape(),
                     new PaymentSheet.PrimaryButtonTypography()
