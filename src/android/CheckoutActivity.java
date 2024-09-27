@@ -11,7 +11,7 @@ import com.stripe.android.paymentsheet.*;
 
 import java.util.HashMap;
 import android.util.Log;
-import androidx.compose.ui.graphics.Color;
+import android.graphics.Color;
 
 public class CheckoutActivity extends AppCompatActivity {
     Intent resultIntent = new Intent();
@@ -70,50 +70,50 @@ public class CheckoutActivity extends AppCompatActivity {
             PaymentSheet.Appearance appearance = new PaymentSheet.Appearance(
                 // Light Mode
                 new PaymentSheet.Colors(
-                    new Color(214, 214, 128, 33), // primary 
-                    new Color(android.graphics.Color.WHITE), // surface
-                    new Color(214, 214, 128, 33), // component
-                    new Color(android.graphics.Color.TRANSPARENT), // componentBorder
-                    new Color(android.graphics.Color.BLACK), // componentDivider
-                    new Color(android.graphics.Color.BLACK), // onComponent  
-                    new Color(115, 115, 117, 123), // onSurface
-                    new Color(android.graphics.Color.BLACK), // subtitle
-                    new Color(157, 157, 160, 172), // placeholderText
-                    new Color(214, 214, 128, 33), // appBarIcon
-                    new Color(android.graphics.Color.RED) // error
+                    Color.rgb(214, 128, 33), // primary 
+                    Color.rgb(255, 255, 255), // surface
+                    Color.rgb(214, 128, 33), // component
+                    Color.TRANSPARENT, // componentBorder
+                    Color.BLACK, // componentDivider
+                    Color.BLACK, // onComponent  
+                    Color.rgb(115, 117, 123), // onSurface
+                    Color.BLACK, // subtitle
+                    Color.rgb(157, 160, 172), // placeholderText
+                    Color.rgb(214, 128, 33), // appBarIcon
+                    Color.RED // error
                 ), 
                 // Dark Mode
                 new PaymentSheet.Colors(
-                    new Color(214, 214, 128, 33), // primary 
-                    new Color(android.graphics.Color.WHITE), // surface
-                    new Color(214, 214, 128, 33), // component
-                    new Color(android.graphics.Color.TRANSPARENT), // componentBorder
-                    new Color(android.graphics.Color.BLACK), // componentDivider
-                    new Color(android.graphics.Color.BLACK), // onComponent  
-                    new Color(115, 115, 117, 123), // onSurface
-                    new Color(android.graphics.Color.BLACK), // subtitle
-                    new Color(157, 157, 160, 172), // placeholderText
-                    new Color(214, 214, 128, 33), // appBarIcon
-                    new Color(android.graphics.Color.RED) // error
+                    Color.rgb(214, 128, 33), // primary 
+                    Color.rgb(255, 255, 255), // surface
+                    Color.rgb(214, 128, 33), // component
+                    Color.TRANSPARENT, // componentBorder
+                    Color.BLACK, // componentDivider
+                    Color.BLACK, // onComponent  
+                    Color.rgb(115, 117, 123), // onSurface
+                    Color.BLACK, // subtitle
+                    Color.rgb(157, 160, 172), // placeholderText
+                    Color.rgb(214, 128, 33), // appBarIcon
+                    Color.RED // error
                 ),
                 // new PaymentSheet.Shapes(),
                 // new PaymentSheet.Typography(),
                 new PaymentSheet.PrimaryButton(
                      // Light Mode
                     new PaymentSheet.PrimaryButtonColors(
-                        new Color(214, 214, 128, 33),
-                        new Color(255, 255, 255, 255),
-                        new Color(214, 214, 128, 33),
-                        new Color(45, 45, 211, 111),
-                        new Color(255, 255, 255, 255)
+                        Color.rgb(214, 128, 33),
+                        Color.rgb(255, 255, 255),
+                        Color.rgb(214, 128, 33),
+                        Color.rgb(45, 211, 111),
+                        Color.rgb(255, 255, 255)
                     ),
                     // Dark Mode
                     new PaymentSheet.PrimaryButtonColors(
-                        new Color(214, 214, 128, 33),
-                        new Color(255, 255, 255, 255),
-                        new Color(214, 214, 128, 33),
-                        new Color(45, 45, 211, 111),
-                        new Color(255, 255, 255, 255)
+                        Color.rgb(214, 128, 33),
+                        Color.rgb(255, 255, 255),
+                        Color.rgb(214, 128, 33),
+                        Color.rgb(45, 211, 111),
+                        Color.rgb(255, 255, 255)
                     ),
                     new PaymentSheet.PrimaryButtonShape(),
                     new PaymentSheet.PrimaryButtonTypography()
