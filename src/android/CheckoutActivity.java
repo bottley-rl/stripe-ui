@@ -78,7 +78,7 @@ public class CheckoutActivity extends AppCompatActivity {
                     Color.BLACK, // onComponent  
                     Color.rgb(115, 117, 123), // onSurface
                     Color.BLACK, // subtitle
-                    Color.GREY, // placeholderText
+                    Color.rgb(157, 160, 172), // placeholderText
                     Color.rgb(214, 128, 33), // appBarIcon
                     Color.RED // error
                 ), 
@@ -92,12 +92,12 @@ public class CheckoutActivity extends AppCompatActivity {
                     Color.BLACK, // onComponent  
                     Color.rgb(115, 117, 123), // onSurface
                     Color.BLACK, // subtitle
-                    Color.GREY, // placeholderText
+                    Color.rgb(157, 160, 172), // placeholderText
                     Color.rgb(214, 128, 33), // appBarIcon
                     Color.RED // error
                 ),
                 new PaymentSheet.Shapes(12.0f, 0.5f),
-                new PaymentSheet.PrimaryButton(new PaymentSheet.PrimaryButtonShape(20f))
+                new PaymentSheet.PrimaryButton(new PaymentSheet.PrimaryButtonShape(20f, 2f))
             );
 
             Log.d("CheckoutActivity", "paymentSheet");
