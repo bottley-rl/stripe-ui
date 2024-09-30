@@ -178,9 +178,21 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void onPaymentSheetResult(final PaymentSheetResult paymentSheetResult) {
         Log.d("CheckoutActivity", "onPaymentSheetResult ------------------------------------>>>>>");
-        Log.d(paymentSheetResult);
+        
+        // Log the result for better visibility
+        if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
+            Log.d("CheckoutActivity", "PaymentSheetResult: Completed");
+        } else if (paymentSheetResult instanceof PaymentSheetResult.Canceled) {
+            Log.d("CheckoutActivity", "PaymentSheetResult: Canceled");
+        } else if (paymentSheetResult instanceof PaymentSheetResult.Failed) {
+            Log.d("CheckoutActivity", "PaymentSheetResult: Failed - " + ((PaymentSheetResult.Failed) paymentSheetResult).getError().getMessage());
+        } else {
+            Log.d("CheckoutActivity", "PaymentSheetResult: Unknown result");
+        }
+
         try {
             resultMap.clear();
+            
             if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
                 resultMap.put("code", "0");
                 resultMap.put("message", "PAYMENT_COMPLETED");
@@ -196,9 +208,11 @@ public class CheckoutActivity extends AppCompatActivity {
                 resultMap.put("message", "PAYMENT_FAILED");
                 resultMap.put("error", "Unknown payment result");
             }
+
             resultIntent.putExtra("result", resultMap);
             setResult(RESULT_OK, resultIntent);
             finish();
+
         } catch (Exception e) {
             Log.e("CheckoutActivity", "Error in onPaymentSheetResult", e);
             resultMap.put("code", "2");
