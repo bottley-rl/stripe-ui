@@ -103,6 +103,13 @@ public class CheckoutActivity extends AppCompatActivity {
 
             PaymentSheet.Address billingAddress = new PaymentSheet.Address(billingCity, billingCountry, billingLine1, billingLine2, billingPostalCode, billingState);
             PaymentSheet.BillingDetails defaultBillingDetails = new PaymentSheet.BillingDetails(billingAddress, billingEmail, billingName, billingPhone);
+            PaymentSheet.BillingDetailsCollectionConfiguration billingDetailsCollectionConfiguration = new PaymentSheet.BillingDetailsCollectionConfiguration(
+                PaymentSheet.BillingDetailsCollectionConfiguration.CollectionMode.Always,
+                PaymentSheet.BillingDetailsCollectionConfiguration.CollectionMode.Automatic,
+                PaymentSheet.BillingDetailsCollectionConfiguration.CollectionMode.Automatic,
+                PaymentSheet.BillingDetailsCollectionConfiguration.AddressCollectionMode.Automatic,
+                false
+            );
             PaymentSheet.CustomerConfiguration customer = (customerId != null && !customerId.isEmpty() && ephemeralKey != null && !ephemeralKey.isEmpty()) 
                 ? new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey)
                 : null;
@@ -111,7 +118,7 @@ public class CheckoutActivity extends AppCompatActivity {
                     ? new PaymentSheet.GooglePayConfiguration(PaymentSheet.GooglePayConfiguration.Environment.Test, appleMerchantCountryCode)
                     : null;
 
-            PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(merchantDisplayName, customer, googlePay, null, defaultBillingDetails, null, true, true, appearance);
+            PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(merchantDisplayName, customer, googlePay, null, defaultBillingDetails, null, true, true, appearance, null, billingDetailsCollectionConfiguration);
 
             if (paymentIntent != null && !paymentIntent.isEmpty() && !paymentIntent.equals("null")) {
                 paymentSheet.presentWithPaymentIntent(paymentIntent, configuration);
