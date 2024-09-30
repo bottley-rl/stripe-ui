@@ -102,19 +102,19 @@ public class CheckoutActivity extends AppCompatActivity {
                 new PaymentSheet.PrimaryButton(
                      // Light Mode
                     new PaymentSheet.PrimaryButtonColors(
-                        new Color(0xFFD68021), // primary button background
-                        new Color(0xFFFFFFFF), // primary button text
-                        new Color(0xFFD68021), // component
-                        new Color(0xFF2DD36F), // active state background (45, 211, 111)
-                        new Color(0xFFFFFFFF)  // active state text
+                        new Color(0xFFD68021L), // primary button background (hex format, with 'L' for Long)
+                        new Color(0xFFFFFFFFL), // primary button text
+                        new Color(0xFFD68021L), // component
+                        new Color(0xFF2DD36FL), // active state background (45, 211, 111)
+                        new Color(0xFFFFFFFFL)  // active state text
                     ),
                     // Dark Mode
                     new PaymentSheet.PrimaryButtonColors(
-                        new Color(0xFFD68021), // primary button background
-                        new Color(0xFFFFFFFF), // primary button text
-                        new Color(0xFFD68021), // component
-                        new Color(0xFF2DD36F), // active state background (45, 211, 111)
-                        new Color(0xFFFFFFFF)  // active state text
+                       new Color(0xFFD68021L), // primary button background (hex format, with 'L' for Long)
+                        new Color(0xFFFFFFFFL), // primary button text
+                        new Color(0xFFD68021L), // component
+                        new Color(0xFF2DD36FL), // active state background (45, 211, 111)
+                        new Color(0xFFFFFFFFL)  // active state text
                     ),
                     new PaymentSheet.PrimaryButtonShape(20f, 2f),
                     new PaymentSheet.PrimaryButtonTypography(null, null)
