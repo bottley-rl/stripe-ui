@@ -12,6 +12,7 @@ import com.stripe.android.paymentsheet.*;
 import java.util.HashMap;
 import android.util.Log;
 import android.graphics.Color;
+import androidx.compose.ui.graphics.Color;
 
 public class CheckoutActivity extends AppCompatActivity {
     Intent resultIntent = new Intent();
@@ -101,19 +102,19 @@ public class CheckoutActivity extends AppCompatActivity {
                 new PaymentSheet.PrimaryButton(
                      // Light Mode
                     new PaymentSheet.PrimaryButtonColors(
-                        Color.rgb(214, 128, 33),
-                        Color.rgb(255, 255, 255),
-                        Color.rgb(214, 128, 33),
-                        Color.rgb(45, 211, 111),
-                        Color.rgb(255, 255, 255)
+                        new Color(0xFFD68021), // primary button background
+                        new Color(0xFFFFFFFF), // primary button text
+                        new Color(0xFFD68021), // component
+                        new Color(0xFF2DD36F), // active state background (45, 211, 111)
+                        new Color(0xFFFFFFFF)  // active state text
                     ),
                     // Dark Mode
                     new PaymentSheet.PrimaryButtonColors(
-                        Color.rgb(214, 128, 33),
-                        Color.rgb(255, 255, 255),
-                        Color.rgb(214, 128, 33),
-                        Color.rgb(45, 211, 111),
-                        Color.rgb(255, 255, 255)
+                        new Color(0xFFD68021), // primary button background
+                        new Color(0xFFFFFFFF), // primary button text
+                        new Color(0xFFD68021), // component
+                        new Color(0xFF2DD36F), // active state background (45, 211, 111)
+                        new Color(0xFFFFFFFF)  // active state text
                     ),
                     new PaymentSheet.PrimaryButtonShape(20f, 2f),
                     new PaymentSheet.PrimaryButtonTypography(null, null)
