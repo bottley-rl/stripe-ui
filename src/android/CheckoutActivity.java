@@ -178,7 +178,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void onPaymentSheetResult(final PaymentSheetResult paymentSheetResult) {
         Log.d("CheckoutActivity", "onPaymentSheetResult ------------------------------------>>>>>");
-        Log.d(paymentSheetResult)
+        Log.d(paymentSheetResult);
         try {
             resultMap.clear();
             if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
