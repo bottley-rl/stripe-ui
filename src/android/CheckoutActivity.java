@@ -178,6 +178,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void onPaymentSheetResult(final PaymentSheetResult paymentSheetResult) {
         Log.d("CheckoutActivity", "onPaymentSheetResult ------------------------------------>>>>>");
+        Log.d(paymentSheetResult)
         try {
             resultMap.clear();
             if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
@@ -190,6 +191,10 @@ public class CheckoutActivity extends AppCompatActivity {
                 resultMap.put("code", "2");
                 resultMap.put("message", "PAYMENT_FAILED");
                 resultMap.put("error", ((PaymentSheetResult.Failed) paymentSheetResult).getError().getMessage());
+            } else {
+                resultMap.put("code", "2");
+                resultMap.put("message", "PAYMENT_FAILED");
+                resultMap.put("error", paymentSheetResult);
             }
             resultIntent.putExtra("result", resultMap);
             setResult(RESULT_OK, resultIntent);
