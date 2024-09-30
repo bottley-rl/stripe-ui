@@ -163,6 +163,8 @@ public class CheckoutActivity extends AppCompatActivity {
                 Log.d("CheckoutActivity", "Missing both paymentIntent && setupIntent");
             }
 
+            Log.d("CheckoutActivity", "Processed all lines +++++")
+
         } catch (Exception e) {
             Log.e("CheckoutActivity", "Error in PaymentSheet initialization", e);
             resultMap.put("code", "2");
@@ -175,20 +177,31 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void onPaymentSheetResult(final PaymentSheetResult paymentSheetResult) {
-        resultMap.clear();
-        if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
-            resultMap.put("code", "0");
-            resultMap.put("message", "PAYMENT_COMPLETED");
-        } else if (paymentSheetResult instanceof PaymentSheetResult.Canceled) {
-            resultMap.put("code", "1");
-            resultMap.put("message", "PAYMENT_CANCELED");
-        } else if (paymentSheetResult instanceof PaymentSheetResult.Failed) {
+        Log.d("CheckoutActivity", "onPaymentSheetResult ------------------------------------>>>>>");
+        try {
+            resultMap.clear();
+            if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
+                resultMap.put("code", "0");
+                resultMap.put("message", "PAYMENT_COMPLETED");
+            } else if (paymentSheetResult instanceof PaymentSheetResult.Canceled) {
+                resultMap.put("code", "1");
+                resultMap.put("message", "PAYMENT_CANCELED");
+            } else if (paymentSheetResult instanceof PaymentSheetResult.Failed) {
+                resultMap.put("code", "2");
+                resultMap.put("message", "PAYMENT_FAILED");
+                resultMap.put("error", ((PaymentSheetResult.Failed) paymentSheetResult).getError().getMessage());
+            }
+            resultIntent.putExtra("result", resultMap);
+            setResult(RESULT_OK, resultIntent);
+            finish();
+        } catch (Exception e) {
+            Log.e("CheckoutActivity", "Error in onPaymentSheetResult", e);
             resultMap.put("code", "2");
             resultMap.put("message", "PAYMENT_FAILED");
-            resultMap.put("error", ((PaymentSheetResult.Failed) paymentSheetResult).getError().getMessage());
+            resultMap.put("error", e.getMessage());
+            resultIntent.putExtra("result", resultMap);
+            setResult(RESULT_OK, resultIntent);
+            finish();
         }
-        resultIntent.putExtra("result", resultMap);
-        setResult(RESULT_OK, resultIntent);
-        finish();
     }
 }
