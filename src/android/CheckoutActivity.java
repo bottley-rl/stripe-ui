@@ -72,7 +72,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 new PaymentSheet.Colors(
                     android.graphics.Color.rgb(214, 128, 33), // primary
                     android.graphics.Color.rgb(255, 255, 255), // surface
-                    android.graphics.Color.rgb(214, 128, 33), // component
+                    android.graphics.Color.rgb(255, 255, 255), // component
                     android.graphics.Color.TRANSPARENT, // componentBorder
                     android.graphics.Color.BLACK, // componentDivider
                     android.graphics.Color.BLACK, // onComponent
@@ -86,7 +86,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 new PaymentSheet.Colors(
                     android.graphics.Color.rgb(214, 128, 33), // primary
                     android.graphics.Color.rgb(255, 255, 255), // surface
-                    android.graphics.Color.rgb(214, 128, 33), // component
+                    android.graphics.Color.rgb(255, 255, 255), // component
                     android.graphics.Color.TRANSPARENT, // componentBorder
                     android.graphics.Color.BLACK, // componentDivider
                     android.graphics.Color.BLACK, // onComponent
