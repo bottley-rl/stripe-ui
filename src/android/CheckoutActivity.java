@@ -24,7 +24,7 @@ public class CheckoutActivity extends AppCompatActivity {
         Intent receivedIntent = getIntent();
 
         String publishableKey = receivedIntent.getStringExtra("publishableKey");
-        String companyName = receivedIntent.getStringExtra("companyName");
+        String merchantDisplayName = receivedIntent.getStringExtra("companyName");
         String paymentIntent = receivedIntent.getStringExtra("paymentIntent");
         String setupIntent = receivedIntent.getStringExtra("setupIntent");
         String customerId = receivedIntent.getStringExtra("customerId");
@@ -45,7 +45,7 @@ public class CheckoutActivity extends AppCompatActivity {
         boolean mobilePayEnabled = receivedIntent.getBooleanExtra("mobilePayEnabled", false);
 
         Log.d("CheckoutActivity", "publishableKey: " + publishableKey);
-        Log.d("CheckoutActivity", "companyName: " + companyName);
+        Log.d("CheckoutActivity", "merchantDisplayName: " + merchantDisplayName);
         Log.d("CheckoutActivity", "paymentIntent: " + paymentIntent);
         Log.d("CheckoutActivity", "setupIntent: " + setupIntent);
         Log.d("CheckoutActivity", "customerId: " + customerId);
@@ -61,7 +61,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         try {
             assert publishableKey != null;
-            assert companyName != null;
+            assert merchantDisplayName != null;
 
             PaymentConfiguration.init(this, publishableKey);
 
@@ -124,20 +124,20 @@ public class CheckoutActivity extends AppCompatActivity {
 
             PaymentSheet.Address billingAddress = new PaymentSheet.Address(billingCity, billingCountry, billingLine1, billingLine2, billingPostalCode, billingState);
             Log.d("CheckoutActivity", "Address");
-            PaymentSheet.BillingDetails billingDetails = new PaymentSheet.BillingDetails(billingAddress, billingEmail, billingName, billingPhone);
+            PaymentSheet.BillingDetails defaultBillingDetails = new PaymentSheet.BillingDetails(billingAddress, billingEmail, billingName, billingPhone);
             Log.d("CheckoutActivity", "BillingDetails");
-            PaymentSheet.CustomerConfiguration customerConfig = (customerId != null && !customerId.isEmpty() && ephemeralKey != null && !ephemeralKey.isEmpty()) 
+            PaymentSheet.CustomerConfiguration customer = (customerId != null && !customerId.isEmpty() && ephemeralKey != null && !ephemeralKey.isEmpty()) 
                 ? new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey)
                 : null;
-            Log.d("CheckoutActivity", "customerConfig");
+            Log.d("CheckoutActivity", "customer");
 
-            PaymentSheet.GooglePayConfiguration googlePayConfig = mobilePayEnabled
+            PaymentSheet.GooglePayConfiguration googlePay = mobilePayEnabled
                     ? new PaymentSheet.GooglePayConfiguration(PaymentSheet.GooglePayConfiguration.Environment.Test, appleMerchantCountryCode)
                     : null;
 
-            Log.d("CheckoutActivity", "googlePayConfig");
+            Log.d("CheckoutActivity", "googlePay");
 
-            PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(companyName, customerConfig, googlePayConfig, appearance, billingDetails);
+            PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(merchantDisplayName, customer, googlePay, null, defaultBillingDetails, null, true, true, appearance);
 
             Log.d("CheckoutActivity", "configuration");
 
