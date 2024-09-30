@@ -163,7 +163,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 Log.d("CheckoutActivity", "Missing both paymentIntent && setupIntent");
             }
 
-            Log.d("CheckoutActivity", "Processed all lines +++++")
+            Log.d("CheckoutActivity", "Processed all lines +++++");
 
         } catch (Exception e) {
             Log.e("CheckoutActivity", "Error in PaymentSheet initialization", e);
