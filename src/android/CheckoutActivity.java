@@ -57,7 +57,7 @@ public class CheckoutActivity extends AppCompatActivity {
                     android.graphics.Color.rgb(230, 235, 241), // componentBorder
                     android.graphics.Color.rgb(230, 235, 241), // componentDivider
                     android.graphics.Color.rgb(62, 63, 76), // onComponent
-                    android.graphics.Color.rgb(115, 117, 123), // onSurface
+                    android.graphics.Color.rgb(62, 63, 76), // onSurface
                     android.graphics.Color.rgb(62, 63, 76), // subtitle
                     android.graphics.Color.rgb(157, 160, 172), // placeholderText
                     android.graphics.Color.rgb(214, 128, 33), // appBarIcon
@@ -71,7 +71,7 @@ public class CheckoutActivity extends AppCompatActivity {
                     android.graphics.Color.rgb(230, 235, 241), // componentBorder
                     android.graphics.Color.rgb(230, 235, 241), // componentDivider
                     android.graphics.Color.rgb(62, 63, 76), // onComponent
-                    android.graphics.Color.rgb(115, 117, 123), // onSurface
+                    android.graphics.Color.rgb(62, 63, 76), // onSurface
                     android.graphics.Color.rgb(62, 63, 76), // subtitle
                     android.graphics.Color.rgb(157, 160, 172), // placeholderText
                     android.graphics.Color.rgb(214, 128, 33), // appBarIcon
@@ -82,19 +82,19 @@ public class CheckoutActivity extends AppCompatActivity {
                 new PaymentSheet.PrimaryButton(
                      // Light Mode
                     new PaymentSheet.PrimaryButtonColors(
-                        android.graphics.Color.rgb(214, 128, 33), // primary button background
-                        android.graphics.Color.rgb(255, 255, 255), // primary button text
-                        android.graphics.Color.rgb(214, 128, 33), // component
-                        android.graphics.Color.rgb(45, 211, 111), // active state background (45, 211, 111)
-                        android.graphics.Color.rgb(255, 255, 255)  // active state text
+                        android.graphics.Color.rgb(214, 128, 33), // background
+                        android.graphics.Color.rgb(255, 255, 255), // onBackground (Text)
+                        android.graphics.Color.TRANSPARENT, // border
+                        android.graphics.Color.rgb(45, 211, 111), // successBackgroundColor
+                        android.graphics.Color.rgb(255, 255, 255)  // onSuccessBackgroundColor (Text)
                     ),
                     // Dark Mode
                     new PaymentSheet.PrimaryButtonColors(
-                        android.graphics.Color.rgb(214, 128, 33), // primary button background
-                        android.graphics.Color.rgb(255, 255, 255), // primary button text
-                        android.graphics.Color.rgb(214, 128, 33), // component
-                        android.graphics.Color.rgb(45, 211, 111), // active state background (45, 211, 111)
-                        android.graphics.Color.rgb(255, 255, 255)  // active state text
+                        android.graphics.Color.rgb(214, 128, 33), // background
+                        android.graphics.Color.rgb(255, 255, 255), // onBackground (Text)
+                        android.graphics.Color.TRANSPARENT, // border
+                        android.graphics.Color.rgb(45, 211, 111), // successBackgroundColor
+                        android.graphics.Color.rgb(255, 255, 255)  // onSuccessBackgroundColor (Text)
                     ),
                     new PaymentSheet.PrimaryButtonShape(4f, 0.5f),
                     new PaymentSheet.PrimaryButtonTypography(null, null)
