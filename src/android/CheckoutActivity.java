@@ -11,7 +11,6 @@ import com.stripe.android.paymentsheet.*;
 
 import java.util.HashMap;
 import android.util.Log;
-import android.graphics.Color;
 import androidx.compose.ui.graphics.Color;
 
 public class CheckoutActivity extends AppCompatActivity {
@@ -71,31 +70,31 @@ public class CheckoutActivity extends AppCompatActivity {
             PaymentSheet.Appearance appearance = new PaymentSheet.Appearance(
                 // Light Mode
                 new PaymentSheet.Colors(
-                    Color.rgb(214, 128, 33), // primary 
-                    Color.rgb(255, 255, 255), // surface
-                    Color.rgb(214, 128, 33), // component
-                    Color.TRANSPARENT, // componentBorder
-                    Color.BLACK, // componentDivider
-                    Color.BLACK, // onComponent  
-                    Color.rgb(115, 117, 123), // onSurface
-                    Color.BLACK, // subtitle
-                    Color.rgb(157, 160, 172), // placeholderText
-                    Color.rgb(214, 128, 33), // appBarIcon
-                    Color.RED // error
+                    android.graphics.Color.rgb(214, 128, 33), // primary
+                    android.graphics.Color.rgb(255, 255, 255), // surface
+                    android.graphics.Color.rgb(214, 128, 33), // component
+                    android.graphics.Color.TRANSPARENT, // componentBorder
+                    android.graphics.Color.BLACK, // componentDivider
+                    android.graphics.Color.BLACK, // onComponent
+                    android.graphics.Color.rgb(115, 117, 123), // onSurface
+                    android.graphics.Color.BLACK, // subtitle
+                    android.graphics.Color.rgb(157, 160, 172), // placeholderText
+                    android.graphics.Color.rgb(214, 128, 33), // appBarIcon
+                    android.graphics.Color.RED // error
                 ), 
                 // Dark Mode
                 new PaymentSheet.Colors(
-                    Color.rgb(214, 128, 33), // primary 
-                    Color.rgb(255, 255, 255), // surface
-                    Color.rgb(214, 128, 33), // component
-                    Color.TRANSPARENT, // componentBorder
-                    Color.BLACK, // componentDivider
-                    Color.BLACK, // onComponent  
-                    Color.rgb(115, 117, 123), // onSurface
-                    Color.BLACK, // subtitle
-                    Color.rgb(157, 160, 172), // placeholderText
-                    Color.rgb(214, 128, 33), // appBarIcon
-                    Color.RED // error
+                    android.graphics.Color.rgb(214, 128, 33), // primary
+                    android.graphics.Color.rgb(255, 255, 255), // surface
+                    android.graphics.Color.rgb(214, 128, 33), // component
+                    android.graphics.Color.TRANSPARENT, // componentBorder
+                    android.graphics.Color.BLACK, // componentDivider
+                    android.graphics.Color.BLACK, // onComponent
+                    android.graphics.Color.rgb(115, 117, 123), // onSurface
+                    android.graphics.Color.BLACK, // subtitle
+                    android.graphics.Color.rgb(157, 160, 172), // placeholderText
+                    android.graphics.Color.rgb(214, 128, 33), // appBarIcon
+                    android.graphics.Color.RED // error
                 ),
                 new PaymentSheet.Shapes(12.0f, 1.0f),
                 new PaymentSheet.Typography(1.0f, null),
