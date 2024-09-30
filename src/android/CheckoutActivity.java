@@ -78,7 +78,7 @@ public class CheckoutActivity extends AppCompatActivity {
                     android.graphics.Color.rgb(237, 28, 36) // error
                 ),
                 new PaymentSheet.Shapes(4f, 0.5f),
-                new PaymentSheet.Typography(null, null),
+                new PaymentSheet.Typography(1.0f, null),
                 new PaymentSheet.PrimaryButton(
                      // Light Mode
                     new PaymentSheet.PrimaryButtonColors(
@@ -97,7 +97,7 @@ public class CheckoutActivity extends AppCompatActivity {
                         android.graphics.Color.rgb(255, 255, 255)  // onSuccessBackgroundColor (Text)
                     ),
                     new PaymentSheet.PrimaryButtonShape(4f, 0.5f),
-                    new PaymentSheet.PrimaryButtonTypography(null, null)
+                    new PaymentSheet.PrimaryButtonTypography(1.0f, null)
                 )
             );
 
