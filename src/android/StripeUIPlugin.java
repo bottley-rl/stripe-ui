@@ -79,4 +79,28 @@ public class StripeUIPlugin extends CordovaPlugin {
             }
         });
     }
+
+    private JSONObject mapToJSON(HashMap<String, String> map) {
+        JSONObject message = new JSONObject();
+        for (Map.Entry<String, String> pairs : map.entrySet()) {
+            try {
+                message.put(pairs.getKey(), pairs.getValue());
+            } catch (JSONException ignored) {
+            }
+        }
+        return message;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == 1) {
+            if (resultCode == -1) {
+                HashMap<String, String> resultMap = (HashMap<String, String>) intent.getSerializableExtra("result");
+                String data = resultMap != null ? mapToJSON(resultMap).toString() : "OK";
+                callback.success(data);
+            }
+        }
+    }
+    
 }
