@@ -7,6 +7,9 @@ import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class StripeUIPlugin extends CordovaPlugin {
     private CallbackContext callback;
 
@@ -102,5 +105,5 @@ public class StripeUIPlugin extends CordovaPlugin {
             }
         }
     }
-    
+
 }

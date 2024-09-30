@@ -44,21 +44,6 @@ public class CheckoutActivity extends AppCompatActivity {
 
         boolean mobilePayEnabled = receivedIntent.getBooleanExtra("mobilePayEnabled", false);
 
-        Log.d("CheckoutActivity", "publishableKey: " + publishableKey);
-        Log.d("CheckoutActivity", "merchantDisplayName: " + merchantDisplayName);
-        Log.d("CheckoutActivity", "paymentIntent: " + paymentIntent);
-        Log.d("CheckoutActivity", "setupIntent: " + setupIntent);
-        Log.d("CheckoutActivity", "customerId: " + customerId);
-        Log.d("CheckoutActivity", "ephemeralKey: " + ephemeralKey);
-        Log.d("CheckoutActivity", "appleMerchantCountryCode: " + appleMerchantCountryCode);
-        Log.d("CheckoutActivity", "billingEmail: " + billingEmail);
-        Log.d("CheckoutActivity", "billingName: " + billingName);
-        Log.d("CheckoutActivity", "billingPhone: " + billingPhone);
-        Log.d("CheckoutActivity", "billingCity: " + billingCity);
-        Log.d("CheckoutActivity", "billingCountry: " + billingCountry);
-        Log.d("CheckoutActivity", "billingPostalCode: " + billingPostalCode);
-        Log.d("CheckoutActivity", "billingState: " + billingState);
-
         try {
             assert publishableKey != null;
             assert merchantDisplayName != null;
@@ -120,50 +105,23 @@ public class CheckoutActivity extends AppCompatActivity {
                 )
             );
 
-            Log.d("CheckoutActivity", "paymentSheet");
-
             PaymentSheet.Address billingAddress = new PaymentSheet.Address(billingCity, billingCountry, billingLine1, billingLine2, billingPostalCode, billingState);
-            Log.d("CheckoutActivity", "Address");
             PaymentSheet.BillingDetails defaultBillingDetails = new PaymentSheet.BillingDetails(billingAddress, billingEmail, billingName, billingPhone);
-            Log.d("CheckoutActivity", "BillingDetails");
             PaymentSheet.CustomerConfiguration customer = (customerId != null && !customerId.isEmpty() && ephemeralKey != null && !ephemeralKey.isEmpty()) 
                 ? new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey)
                 : null;
-            Log.d("CheckoutActivity", "customer");
 
             PaymentSheet.GooglePayConfiguration googlePay = mobilePayEnabled
                     ? new PaymentSheet.GooglePayConfiguration(PaymentSheet.GooglePayConfiguration.Environment.Test, appleMerchantCountryCode)
                     : null;
 
-            Log.d("CheckoutActivity", "googlePay");
-
             PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(merchantDisplayName, customer, googlePay, null, defaultBillingDetails, null, true, true, appearance);
 
-            Log.d("CheckoutActivity", "configuration");
-
-            if (paymentIntent == null) {
-                 Log.d("CheckoutActivity", "paymentIntent equals null type");
-            }
-
-            if (paymentIntent.equals("null")) {
-                 Log.d("CheckoutActivity", "paymentIntent equals 'null'");
-            }
-
-            if (paymentIntent.isEmpty()) {
-                Log.d("CheckoutActivity", "paymentIntent is empty");
-            }
-
             if (paymentIntent != null && !paymentIntent.isEmpty() && !paymentIntent.equals("null")) {
-                Log.d("CheckoutActivity", "paymentIntent: " + paymentIntent);
                 paymentSheet.presentWithPaymentIntent(paymentIntent, configuration);
             } else if (setupIntent != null) {
-                Log.d("CheckoutActivity", "setupIntent: " + setupIntent);
                 paymentSheet.presentWithSetupIntent(setupIntent, configuration);
-            } else {
-                Log.d("CheckoutActivity", "Missing both paymentIntent && setupIntent");
             }
-
-            Log.d("CheckoutActivity", "Processed all lines +++++");
 
         } catch (Exception e) {
             Log.e("CheckoutActivity", "Error in PaymentSheet initialization", e);
@@ -177,22 +135,8 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void onPaymentSheetResult(final PaymentSheetResult paymentSheetResult) {
-        Log.d("CheckoutActivity", "onPaymentSheetResult ------------------------------------>>>>>");
-        
-        // Log the result for better visibility
-        if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
-            Log.d("CheckoutActivity", "PaymentSheetResult: Completed");
-        } else if (paymentSheetResult instanceof PaymentSheetResult.Canceled) {
-            Log.d("CheckoutActivity", "PaymentSheetResult: Canceled");
-        } else if (paymentSheetResult instanceof PaymentSheetResult.Failed) {
-            Log.d("CheckoutActivity", "PaymentSheetResult: Failed - " + ((PaymentSheetResult.Failed) paymentSheetResult).getError().getMessage());
-        } else {
-            Log.d("CheckoutActivity", "PaymentSheetResult: Unknown result");
-        }
-
         try {
             resultMap.clear();
-            
             if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
                 resultMap.put("code", "0");
                 resultMap.put("message", "PAYMENT_COMPLETED");
@@ -208,7 +152,6 @@ public class CheckoutActivity extends AppCompatActivity {
                 resultMap.put("message", "PAYMENT_FAILED");
                 resultMap.put("error", "Unknown payment result");
             }
-
             resultIntent.putExtra("result", resultMap);
             setResult(RESULT_OK, resultIntent);
             finish();
