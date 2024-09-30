@@ -194,7 +194,7 @@ public class CheckoutActivity extends AppCompatActivity {
             } else {
                 resultMap.put("code", "2");
                 resultMap.put("message", "PAYMENT_FAILED");
-                resultMap.put("error", paymentSheetResult);
+                resultMap.put("error", "Unknown payment result");
             }
             resultIntent.putExtra("result", resultMap);
             setResult(RESULT_OK, resultIntent);
