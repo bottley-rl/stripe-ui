@@ -10,7 +10,6 @@ import com.stripe.android.PaymentConfiguration;
 import com.stripe.android.paymentsheet.*;
 
 import java.util.HashMap;
-import android.util.Log;
 import androidx.compose.ui.graphics.Color;
 
 public class CheckoutActivity extends AppCompatActivity {
@@ -22,7 +21,6 @@ public class CheckoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         resultMap.clear();
         Intent receivedIntent = getIntent();
-
         String publishableKey = receivedIntent.getStringExtra("publishableKey");
         String merchantDisplayName = receivedIntent.getStringExtra("companyName");
         String paymentIntent = receivedIntent.getStringExtra("paymentIntent");
@@ -47,9 +45,7 @@ public class CheckoutActivity extends AppCompatActivity {
         try {
             assert publishableKey != null;
             assert merchantDisplayName != null;
-
             PaymentConfiguration.init(this, publishableKey);
-
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
 
             PaymentSheet.Appearance appearance = new PaymentSheet.Appearance(
@@ -58,31 +54,31 @@ public class CheckoutActivity extends AppCompatActivity {
                     android.graphics.Color.rgb(214, 128, 33), // primary
                     android.graphics.Color.rgb(255, 255, 255), // surface
                     android.graphics.Color.rgb(255, 255, 255), // component
-                    android.graphics.Color.rgb(157, 160, 172), // componentBorder
-                    android.graphics.Color.rgb(157, 160, 172), // componentDivider
-                    android.graphics.Color.BLACK, // onComponent
+                    android.graphics.Color.rgb(230, 235, 241), // componentBorder
+                    android.graphics.Color.rgb(230, 235, 241), // componentDivider
+                    android.graphics.Color.rgb(62, 63, 76), // onComponent
                     android.graphics.Color.rgb(115, 117, 123), // onSurface
-                    android.graphics.Color.BLACK, // subtitle
+                    android.graphics.Color.rgb(62, 63, 76), // subtitle
                     android.graphics.Color.rgb(157, 160, 172), // placeholderText
                     android.graphics.Color.rgb(214, 128, 33), // appBarIcon
-                    android.graphics.Color.RED // error
+                    android.graphics.Color.rgb(237, 28, 36) // error
                 ), 
                 // Dark Mode
                 new PaymentSheet.Colors(
                     android.graphics.Color.rgb(214, 128, 33), // primary
                     android.graphics.Color.rgb(255, 255, 255), // surface
                     android.graphics.Color.rgb(255, 255, 255), // component
-                    android.graphics.Color.rgb(157, 160, 172), // componentBorder
-                    android.graphics.Color.rgb(157, 160, 172), // componentDivider
-                    android.graphics.Color.BLACK, // onComponent
+                    android.graphics.Color.rgb(230, 235, 241), // componentBorder
+                    android.graphics.Color.rgb(230, 235, 241), // componentDivider
+                    android.graphics.Color.rgb(62, 63, 76), // onComponent
                     android.graphics.Color.rgb(115, 117, 123), // onSurface
-                    android.graphics.Color.BLACK, // subtitle
+                    android.graphics.Color.rgb(62, 63, 76), // subtitle
                     android.graphics.Color.rgb(157, 160, 172), // placeholderText
                     android.graphics.Color.rgb(214, 128, 33), // appBarIcon
-                    android.graphics.Color.RED // error
+                    android.graphics.Color.rgb(237, 28, 36) // error
                 ),
-                new PaymentSheet.Shapes(12.0f, 1.0f),
-                new PaymentSheet.Typography(1.0f, null),
+                new PaymentSheet.Shapes(null, null),
+                new PaymentSheet.Typography(null, null),
                 new PaymentSheet.PrimaryButton(
                      // Light Mode
                     new PaymentSheet.PrimaryButtonColors(
@@ -100,7 +96,7 @@ public class CheckoutActivity extends AppCompatActivity {
                         android.graphics.Color.rgb(45, 211, 111), // active state background (45, 211, 111)
                         android.graphics.Color.rgb(255, 255, 255)  // active state text
                     ),
-                    new PaymentSheet.PrimaryButtonShape(20f, 2f),
+                    new PaymentSheet.PrimaryButtonShape(4f, 0.5f),
                     new PaymentSheet.PrimaryButtonTypography(null, null)
                 )
             );
@@ -124,7 +120,6 @@ public class CheckoutActivity extends AppCompatActivity {
             }
 
         } catch (Exception e) {
-            Log.e("CheckoutActivity", "Error in PaymentSheet initialization", e);
             resultMap.put("code", "2");
             resultMap.put("message", "PAYMENT_FAILED");
             resultMap.put("error", e.getMessage());
@@ -135,35 +130,20 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void onPaymentSheetResult(final PaymentSheetResult paymentSheetResult) {
-        try {
-            resultMap.clear();
-            if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
-                resultMap.put("code", "0");
-                resultMap.put("message", "PAYMENT_COMPLETED");
-            } else if (paymentSheetResult instanceof PaymentSheetResult.Canceled) {
-                resultMap.put("code", "1");
-                resultMap.put("message", "PAYMENT_CANCELED");
-            } else if (paymentSheetResult instanceof PaymentSheetResult.Failed) {
-                resultMap.put("code", "2");
-                resultMap.put("message", "PAYMENT_FAILED");
-                resultMap.put("error", ((PaymentSheetResult.Failed) paymentSheetResult).getError().getMessage());
-            } else {
-                resultMap.put("code", "2");
-                resultMap.put("message", "PAYMENT_FAILED");
-                resultMap.put("error", "Unknown payment result");
-            }
-            resultIntent.putExtra("result", resultMap);
-            setResult(RESULT_OK, resultIntent);
-            finish();
-
-        } catch (Exception e) {
-            Log.e("CheckoutActivity", "Error in onPaymentSheetResult", e);
+        resultMap.clear();
+        if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
+            resultMap.put("code", "0");
+            resultMap.put("message", "PAYMENT_COMPLETED");
+        } else if (paymentSheetResult instanceof PaymentSheetResult.Canceled) {
+            resultMap.put("code", "1");
+            resultMap.put("message", "PAYMENT_CANCELED");
+        } else if (paymentSheetResult instanceof PaymentSheetResult.Failed) {
             resultMap.put("code", "2");
             resultMap.put("message", "PAYMENT_FAILED");
-            resultMap.put("error", e.getMessage());
-            resultIntent.putExtra("result", resultMap);
-            setResult(RESULT_OK, resultIntent);
-            finish();
+            resultMap.put("error", ((PaymentSheetResult.Failed) paymentSheetResult).getError().getMessage());
         }
+        resultIntent.putExtra("result", resultMap);
+        setResult(RESULT_OK, resultIntent);
+        finish();
     }
 }
