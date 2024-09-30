@@ -11,7 +11,7 @@ import com.stripe.android.paymentsheet.*;
 
 import java.util.HashMap;
 import android.util.Log;
-import androidx.compose.ui.graphics.Color;
+import android.graphics.Color;
 
 public class CheckoutActivity extends AppCompatActivity {
     Intent resultIntent = new Intent();
