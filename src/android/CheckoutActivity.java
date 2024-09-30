@@ -67,59 +67,58 @@ public class CheckoutActivity extends AppCompatActivity {
 
             PaymentSheet paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
 
-           PaymentSheet.Appearance appearance = new PaymentSheet.Appearance(
+            PaymentSheet.Appearance appearance = new PaymentSheet.Appearance(
                 // Light Mode
                 new PaymentSheet.Colors(
-                    new Color(0xFF, 0xD6, 0x80, 0x21), // primary (214, 128, 33)
-                    new Color(0xFF, 0xFF, 0xFF, 0xFF), // surface (255, 255, 255)
-                    new Color(0xFF, 0xD6, 0x80, 0x21), // component (214, 128, 33)
-                    Color.Transparent,                  // componentBorder
-                    Color.Black,                        // componentDivider
-                    Color.Black,                        // onComponent  
-                    new Color(0xFF, 0x73, 0x75, 0x7B), // onSurface (115, 117, 123)
-                    Color.Black,                        // subtitle
-                    new Color(0xFF, 0x9D, 0xA0, 0xAC), // placeholderText (157, 160, 172)
-                    new Color(0xFF, 0xD6, 0x80, 0x21), // appBarIcon (214, 128, 33)
-                    Color.Red                           // error
+                    Color.rgb(214, 128, 33), // primary 
+                    Color.rgb(255, 255, 255), // surface
+                    Color.rgb(214, 128, 33), // component
+                    Color.TRANSPARENT, // componentBorder
+                    Color.BLACK, // componentDivider
+                    Color.BLACK, // onComponent  
+                    Color.rgb(115, 117, 123), // onSurface
+                    Color.BLACK, // subtitle
+                    Color.rgb(157, 160, 172), // placeholderText
+                    Color.rgb(214, 128, 33), // appBarIcon
+                    Color.RED // error
                 ), 
                 // Dark Mode
                 new PaymentSheet.Colors(
-                    new Color(0xFF, 0xD6, 0x80, 0x21), // primary (214, 128, 33)
-                    new Color(0xFF, 0xFF, 0xFF, 0xFF), // surface (255, 255, 255)
-                    new Color(0xFF, 0xD6, 0x80, 0x21), // component (214, 128, 33)
-                    Color.Transparent,                  // componentBorder
-                    Color.Black,                        // componentDivider
-                    Color.Black,                        // onComponent  
-                    new Color(0xFF, 0x73, 0x75, 0x7B), // onSurface (115, 117, 123)
-                    Color.Black,                        // subtitle
-                    new Color(0xFF, 0x9D, 0xA0, 0xAC), // placeholderText (157, 160, 172)
-                    new Color(0xFF, 0xD6, 0x80, 0x21), // appBarIcon (214, 128, 33)
-                    Color.Red                           // error
+                    Color.rgb(214, 128, 33), // primary 
+                    Color.rgb(255, 255, 255), // surface
+                    Color.rgb(214, 128, 33), // component
+                    Color.TRANSPARENT, // componentBorder
+                    Color.BLACK, // componentDivider
+                    Color.BLACK, // onComponent  
+                    Color.rgb(115, 117, 123), // onSurface
+                    Color.BLACK, // subtitle
+                    Color.rgb(157, 160, 172), // placeholderText
+                    Color.rgb(214, 128, 33), // appBarIcon
+                    Color.RED // error
                 ),
-                new PaymentSheet.Shapes(12.0f, 1.0f), // Define custom corner radius and stroke width
-                new PaymentSheet.Typography(1.0f, null), // Define typography with custom font and scale factor
+                new PaymentSheet.Shapes(12.0f, 1.0f),
+                new PaymentSheet.Typography(1.0f, null),
                 new PaymentSheet.PrimaryButton(
-                    // Light Mode
+                     // Light Mode
                     new PaymentSheet.PrimaryButtonColors(
-                        new Color(0xFF, 0xD6, 0x80, 0x21), // primary button background
-                        new Color(0xFF, 0xFF, 0xFF, 0xFF), // primary button text
-                        new Color(0xFF, 0xD6, 0x80, 0x21), // component
-                        new Color(0xFF, 0x2D, 0xD3, 0x6F), // active state background (45, 211, 111)
-                        new Color(0xFF, 0xFF, 0xFF, 0xFF)  // active state text
+                        Color.rgb(214, 128, 33),
+                        Color.rgb(255, 255, 255),
+                        Color.rgb(214, 128, 33),
+                        Color.rgb(45, 211, 111),
+                        Color.rgb(255, 255, 255)
                     ),
                     // Dark Mode
                     new PaymentSheet.PrimaryButtonColors(
-                        new Color(0xFF, 0xD6, 0x80, 0x21), // primary button background
-                        new Color(0xFF, 0xFF, 0xFF, 0xFF), // primary button text
-                        new Color(0xFF, 0xD6, 0x80, 0x21), // component
-                        new Color(0xFF, 0x2D, 0xD3, 0x6F), // active state background (45, 211, 111)
-                        new Color(0xFF, 0xFF, 0xFF, 0xFF)  // active state text
+                        Color.rgb(214, 128, 33),
+                        Color.rgb(255, 255, 255),
+                        Color.rgb(214, 128, 33),
+                        Color.rgb(45, 211, 111),
+                        Color.rgb(255, 255, 255)
                     ),
-                    new PaymentSheet.PrimaryButtonShape(20f, 2f), // Custom corner radius and stroke width
-                    new PaymentSheet.PrimaryButtonTypography(null, null) // Use default typography
+                    new PaymentSheet.PrimaryButtonShape(20f, 2f),
+                    new PaymentSheet.PrimaryButtonTypography(null, null)
                 )
             );
-
 
             Log.d("CheckoutActivity", "paymentSheet");
 
