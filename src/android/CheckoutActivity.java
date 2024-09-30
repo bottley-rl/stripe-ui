@@ -96,8 +96,8 @@ public class CheckoutActivity extends AppCompatActivity {
                     Color.rgb(214, 128, 33), // appBarIcon
                     Color.RED // error
                 ),
-                new PaymentSheet.Shapes(12.0f,0.5f),
-                new PaymentSheet.Typography.default.copy(),
+                new PaymentSheet.Shapes(),
+                new PaymentSheet.Typography(),
                 new PaymentSheet.PrimaryButton(
                      // Light Mode
                     new PaymentSheet.PrimaryButtonColors(
@@ -115,7 +115,7 @@ public class CheckoutActivity extends AppCompatActivity {
                         Color.rgb(45, 211, 111),
                         Color.rgb(255, 255, 255)
                     ),
-                    new PaymentSheet.PrimaryButtonShape(20f, 0.5f),
+                    new PaymentSheet.PrimaryButtonShape(),
                     new PaymentSheet.PrimaryButtonTypography()
                 )
             );
