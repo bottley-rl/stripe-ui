@@ -33,7 +33,6 @@ public class StripeUIPlugin extends CordovaPlugin {
             return true;
         }
         return false;
-       
     }
 
     private void presentPaymentSheet(JSONObject paymentConfig, JSONObject billingConfig) {
