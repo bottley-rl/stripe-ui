@@ -10,28 +10,36 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import android.util.Log;
+
+import com.stripe.android.Stripe;
+import com.stripe.android.model.SetupIntent;
+import com.stripe.android.exception.StripeException;
 
 public class StripeUIPlugin extends CordovaPlugin {
-    private CallbackContext callback;
+    private Stripe stripe;
+    private CallbackContext callbackContext;
 
     @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
-        switch (action) {
-            case "presentPaymentSheet":
-                this.presentPaymentSheet(args, callbackContext);
-                break;
-            default:
-                return false;
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        this.callbackContext = callbackContext;
+        if (action.equals("presentPaymentSheet")) {
+            JSONObject paymentConfig = !args.getString(0).equals("null") ? args.getJSONObject(0) : null;
+            JSONObject billingConfig = !args.getString(1).equals("null") ? args.getJSONObject(1) : null;
+            this.presentPaymentSheet(paymentConfig, billingConfig);
+            return true;
+        } else if (action.equals("retrieveSetupIntent")) {
+            String clientSecret = args.getString(0);
+            this.retrieveSetupIntent(clientSecret);
+            return true;
         }
-        return true;
+        return false;
+       
     }
 
-    private void presentPaymentSheet(JSONArray args, CallbackContext callbackContext) {
+    private void presentPaymentSheet(JSONObject paymentConfig, JSONObject billingConfig) {
         cordova.getThreadPool().execute(() -> {
             try {
-                callback = callbackContext;
-                JSONObject paymentConfig = !args.getString(0).equals("null") ? args.getJSONObject(0) : null;
-                JSONObject billingConfig = !args.getString(1).equals("null") ? args.getJSONObject(1) : null;
                 assert paymentConfig != null;   
                 String publishableKey = paymentConfig.getString("publishableKey");
                 String companyName = paymentConfig.getString("companyName");
@@ -71,11 +79,39 @@ public class StripeUIPlugin extends CordovaPlugin {
                     intent.putExtra("billingPostalCode", billingPostalCode);
                     intent.putExtra("billingState", billingState);
                 }
+
+                // Initialize Stripe if it's not already initialized
+                if (stripe == null) {
+                    stripe = new Stripe(cordova.getContext(), publishableKey);
+                }
+
                 cordova.setActivityResultCallback(this);
                 cordova.getActivity().startActivityForResult(intent, 1);
             } catch (Throwable e) {
                 e.printStackTrace();
                 callbackContext.error(e.getMessage());
+            }
+        });
+    }
+
+    private void retrieveSetupIntent(String clientSecret) {
+        cordova.getThreadPool().execute(() -> {
+            try {
+                SetupIntent setupIntent = stripe.retrieveSetupIntent(clientSecret);
+                if (setupIntent != null) {
+                    Map<String, Object> result = new HashMap<>();
+                    result.put("id", setupIntent.getId());
+                    result.put("clientSecret", setupIntent.getClientSecret());
+                    result.put("paymentMethodId", setupIntent.getPaymentMethodId());
+                    result.put("created", setupIntent.getCreated());
+
+                    callbackContext.success(new JSONObject(result));
+                } else {
+                    callbackContext.error("SetupIntent retrieval failed");
+                }
+            } catch (StripeException e) {
+                Log.e("StripeUIPlugin", "Error retrieving SetupIntent", e);
+                callbackContext.error("Error: " + e.getMessage());
             }
         });
     }
@@ -98,7 +134,7 @@ public class StripeUIPlugin extends CordovaPlugin {
             if (resultCode == -1) {
                 HashMap<String, String> resultMap = (HashMap<String, String>) intent.getSerializableExtra("result");
                 String data = resultMap != null ? mapToJSON(resultMap).toString() : "OK";
-                callback.success(data);
+                callbackContext.success(data);
             }
         }
     }
