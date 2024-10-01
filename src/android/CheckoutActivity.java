@@ -7,7 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.stripe.android.PaymentConfiguration;
-import com.stripe.android.paymentsheet.*;
+import com.stripe.android.paymentsheet.PaymentSheet;
+import com.stripe.android.paymentsheet.PaymentSheetResult;
 
 import java.util.HashMap;
 import androidx.compose.ui.graphics.Color;
