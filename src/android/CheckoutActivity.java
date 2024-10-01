@@ -56,8 +56,8 @@ public class CheckoutActivity extends AppCompatActivity {
                     android.graphics.Color.rgb(255, 255, 255), // component
                     android.graphics.Color.rgb(230, 235, 241), // componentBorder
                     android.graphics.Color.rgb(230, 235, 241), // componentDivider
-                    android.graphics.Color.rgb(62, 63, 76), // onComponent
-                    android.graphics.Color.rgb(62, 63, 76), // onSurface
+                    android.graphics.Color.rgb(62, 63, 76), // onComponent (Text)
+                    android.graphics.Color.rgb(62, 63, 76), // onSurface (Text)
                     android.graphics.Color.rgb(62, 63, 76), // subtitle
                     android.graphics.Color.rgb(157, 160, 172), // placeholderText
                     android.graphics.Color.rgb(214, 128, 33), // appBarIcon
@@ -70,8 +70,8 @@ public class CheckoutActivity extends AppCompatActivity {
                     android.graphics.Color.rgb(255, 255, 255), // component
                     android.graphics.Color.rgb(230, 235, 241), // componentBorder
                     android.graphics.Color.rgb(230, 235, 241), // componentDivider
-                    android.graphics.Color.rgb(62, 63, 76), // onComponent
-                    android.graphics.Color.rgb(62, 63, 76), // onSurface
+                    android.graphics.Color.rgb(62, 63, 76), // onComponent (Text)
+                    android.graphics.Color.rgb(62, 63, 76), // onSurface (Text)
                     android.graphics.Color.rgb(62, 63, 76), // subtitle
                     android.graphics.Color.rgb(157, 160, 172), // placeholderText
                     android.graphics.Color.rgb(214, 128, 33), // appBarIcon
