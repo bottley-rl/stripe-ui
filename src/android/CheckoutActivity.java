@@ -1,4 +1,4 @@
-package cordova.plugin.stripeuiplugin;
+package cordova.plugin.stripeplugin;
 
 import android.content.Intent;
 import android.os.Bundle;

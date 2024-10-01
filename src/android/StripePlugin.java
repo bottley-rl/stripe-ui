@@ -1,4 +1,4 @@
-package cordova.plugin.stripeuiplugin;
+package cordova.plugin.stripeplugin;
 
 import android.content.Intent;
 
@@ -15,7 +15,7 @@ import android.util.Log;
 import com.stripe.android.Stripe;
 import com.stripe.android.model.SetupIntent;
 
-public class StripeUIPlugin extends CordovaPlugin {
+public class StripePlugin extends CordovaPlugin {
     private Stripe stripe;
     private CallbackContext callbackContext;
 
@@ -108,7 +108,7 @@ public class StripeUIPlugin extends CordovaPlugin {
                     callbackContext.error("SetupIntent retrieval failed");
                 }
             } catch (Throwable e) {
-                Log.e("StripeUIPlugin", "Error retrieving SetupIntent", e);
+                Log.e("StripePlugin", "Error retrieving SetupIntent", e);
                 e.printStackTrace();
                 callbackContext.error(e.getMessage());
             }

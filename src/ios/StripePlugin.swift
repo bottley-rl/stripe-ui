@@ -1,7 +1,7 @@
 import UIKit
 import StripePaymentSheet
 
-@objc(StripeUIPlugin) class StripeUIPlugin : CDVPlugin {
+@objc(StripePlugin) class StripePlugin : CDVPlugin {
     var paymentSheet: PaymentSheet?
     @objc(presentPaymentSheet:)
     func presentPaymentSheet(command: CDVInvokedUrlCommand){
@@ -85,42 +85,24 @@ import StripePaymentSheet
             }
         }
     }
+    @objc(retrieveSetupIntent:)
+    func retrieveSetupIntent(command: CDVInvokedUrlCommand){
+        let clientSecret = (command.argument(at: 0) ?? "") as? String ?? ""
 
-    @objc(confirmSetupIntent:)
-    func confirmSetupIntent(command: CDVInvokedUrlCommand) {
-        let paymentConfig = (command.argument(at: 0) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
-        let setupIntentClientSecret = (paymentConfig["setupIntentClientSecret"] ?? "") as? String ?? ""
-        let publishableKey = (paymentConfig["publishableKey"] ?? "") as? String ?? ""
-
-        // Check if the setupIntentClientSecret and publishableKey are not empty
-        if setupIntentClientSecret.isEmpty || publishableKey.isEmpty {
-            let message = ["code": "2", "message": "SETUP_INTENT_CONFIRMATION_FAILED", "error": "Invalid SetupIntentClientSecret or PublishableKey"] as [AnyHashable: Any]
-            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: message)
-            self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
-            return
-        }
-
-        STPAPIClient.shared.publishableKey = publishableKey
-
-        let setupIntentParams = STPSetupIntentConfirmParams(clientSecret: setupIntentClientSecret)
-        
-        STPAPIClient.shared.confirmSetupIntent(with: setupIntentParams, expand: ["payment_method"]) { setupIntent, error in
-            if let error = error {
-                let message = ["code": "2", "message": "SETUP_INTENT_CONFIRMATION_FAILED", "error": "\(error.localizedDescription)"] as [AnyHashable: Any]
-                let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: message)
-                self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
-                return
-            }
-            
-            if let paymentMethodID = setupIntent?.paymentMethodID {
-                let message = ["code": "0", "message": "SETUP_INTENT_CONFIRMED", "paymentMethodID": paymentMethodID] as [AnyHashable: Any]
-                let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
-                self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
+        STPAPIClient.shared.retrieveSetupIntent(withClientSecret: clientSecret) { setupIntent, error in
+            var message = [:] as [AnyHashable : Any]
+            if (error != nil) {
+                message = ["error":"\(error?.localizedDescription ?? "")"]
             } else {
-                    let message = ["code": "2", "message": "SETUP_INTENT_CONFIRMATION_FAILED", "error": "Payment method ID not found"] as [AnyHashable: Any]
-                    let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: message)
-                    self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
+                let clientSecret = (setupIntent?.clientSecret ?? "") as String
+                let paymentMethodId = (setupIntent?.paymentMethodID ?? "") as String
+                let id = (setupIntent?.stripeID ?? "") as String
+                let created = (setupIntent?.created.timeIntervalSince1970 ?? 0) as TimeInterval
+                
+                message = ["id": id, "clientSecret": clientSecret, "paymentMethodId": paymentMethodId, "created": created] as [AnyHashable : Any]
             }
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
+            self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
         }
     }
 }
