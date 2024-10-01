@@ -14,7 +14,6 @@ import android.util.Log;
 
 import com.stripe.android.Stripe;
 import com.stripe.android.model.SetupIntent;
-import com.stripe.android.exception.StripeException;
 
 public class StripeUIPlugin extends CordovaPlugin {
     private Stripe stripe;
@@ -97,7 +96,7 @@ public class StripeUIPlugin extends CordovaPlugin {
     private void retrieveSetupIntent(String clientSecret) {
         cordova.getThreadPool().execute(() -> {
             try {
-                SetupIntent setupIntent = stripe.retrieveSetupIntent(clientSecret);
+                SetupIntent setupIntent = stripe.retrieveSetupIntentSynchronous(clientSecret);
                 if (setupIntent != null) {
                     Map<String, Object> result = new HashMap<>();
                     result.put("id", setupIntent.getId());
@@ -109,9 +108,10 @@ public class StripeUIPlugin extends CordovaPlugin {
                 } else {
                     callbackContext.error("SetupIntent retrieval failed");
                 }
-            } catch (StripeException e) {
+            } catch (Throwable e) {
                 Log.e("StripeUIPlugin", "Error retrieving SetupIntent", e);
-                callbackContext.error("Error: " + e.getMessage());
+                e.printStackTrace();
+                callbackContext.error(e.getMessage());
             }
         });
     }
