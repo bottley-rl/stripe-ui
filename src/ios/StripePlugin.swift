@@ -22,6 +22,8 @@ import StripePaymentSheet
         let primaryButtonLabel = (paymentConfig["primaryButtonLabel"] ?? "") as? String ?? ""
         let applePaymentSummaryItems = (paymentConfig["applePaymentSummaryItems"] ?? []) as? [[String: Any]] ?? []
 
+        print("applePaymentSummaryItems: " \(applePaymentSummaryItems))
+
         // Customer Billing Details
         let billingConfig = (command.argument(at: 1) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
         let billingEmail = (billingConfig["billingEmail"] ?? "") as? String ?? ""
