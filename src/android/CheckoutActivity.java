@@ -116,7 +116,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 : null;
 
             PaymentSheet.GooglePayConfiguration googlePay = mobilePayEnabled
-                    ? new PaymentSheet.GooglePayConfiguration(PaymentSheet.GooglePayConfiguration.Environment.Test, appleMerchantCountryCode)
+                    ? new PaymentSheet.GooglePayConfiguration(PaymentSheet.GooglePayConfiguration.Environment.Test, appleMerchantCountryCode, "USD")
                     : null;
 
             PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(merchantDisplayName, customer, googlePay, null, defaultBillingDetails, null, true, true, appearance, null, billingDetailsCollectionConfiguration);

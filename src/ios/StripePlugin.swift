@@ -20,9 +20,6 @@ import StripePaymentSheet
         let mobilePayEnabled = (paymentConfig["mobilePayEnabled"] ?? false) as? Bool ?? false
         let returnURL = (paymentConfig["returnURL"] ?? "") as? String ?? ""
         let primaryButtonLabel = (paymentConfig["primaryButtonLabel"] ?? "") as? String ?? ""
-        let applePaymentSummaryItems = (paymentConfig["applePaymentSummaryItems"] ?? []) as? [[String: Any]] ?? []
-
-        print("applePaymentSummaryItems: \(applePaymentSummaryItems)")
 
         // Customer Billing Details
         let billingConfig = (command.argument(at: 1) ?? [String: Any]()) as? [String: Any] ?? [String: Any]()
@@ -31,7 +28,6 @@ import StripePaymentSheet
         
         STPAPIClient.shared.publishableKey = publishableKey
 
-        var useMobilePay = false
         var configuration = PaymentSheet.Configuration()
         
         // Currently dark mode not supported
@@ -83,7 +79,7 @@ import StripePaymentSheet
         paymentSheet?.present(from: self.viewController) { paymentResult in
             switch paymentResult {
                 case .completed:
-                    let message = ["code": "0", "message": "PAYMENT_COMPLETED", "useMobilePay": useMobilePay] as [AnyHashable : Any]
+                    let message = ["code": "0", "message": "PAYMENT_COMPLETED"] as [AnyHashable : Any]
                     let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
                     self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
                 case .canceled:
