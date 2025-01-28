@@ -51,71 +51,7 @@ import StripePaymentSheet
         
         if mobilePayEnabled {
             print("mobilePayEnabled is enabled")
-            let formatter = NumberFormatter()
-            formatter.generatesDecimalNumbers = true
-
-            var paymentSummaryItems = [PKPaymentSummaryItem]()
-            for applePaymentSummaryItem in applePaymentSummaryItems {
-                let itemAmount = formatter.number(from: applePaymentSummaryItem["amount"] as! String) as? NSDecimalNumber ?? 0
-
-                print("itemAmount: \(itemAmount)")
-
-                print("applePaymentSummaryItem: \(applePaymentSummaryItem)")
-
-                if applePaymentSummaryItem["isRecurring"] as! Bool { 
-
-                    print("Is Recurring payment")
-                    let recurringStartDateValue = (applePaymentSummaryItem["recurringStartDateValue"] as? TimeInterval) ?? 0
-
-                    print("recurringStartDateValue: \(recurringStartDateValue)")
-
-                    if #available(iOS 15.0, *) {
-
-                        print("iOS 15.0 + : true")
-
-                        let recurringItem = PKRecurringPaymentSummaryItem(label: applePaymentSummaryItem["label"] as! String, amount: itemAmount)
-
-                        print("recurringItem: \(recurringItem)")
-
-                        recurringItem.intervalCount = 1
-                        recurringItem.intervalUnit = (applePaymentSummaryItem["recurringIntervalUnit"] as! String == "MONTHLY") ? .month : .year
-                        if recurringStartDateValue > 0 {
-                            recurringItem.startDate = Date(timeIntervalSince1970: recurringStartDateValue / 1000)
-                        }
-                        paymentSummaryItems.append(recurringItem)
-
-                        print("paymentSummaryItems: \(paymentSummaryItems)")
-                    } else {
-                         print("iOS 15.0 + : false")
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateStyle = .medium
-                        let recurringStartDate = Date(timeIntervalSince1970: recurringStartDateValue / 1000)
-
-                        let labelWithDate = (applePaymentSummaryItem["label"] as! String) + (recurringStartDateValue > 0 ? (" From " + dateFormatter.string(from: recurringStartDate)) : "")
-                        let summaryItem = PKPaymentSummaryItem(label:labelWithDate, amount: itemAmount)
-                        paymentSummaryItems.append(summaryItem)
-                    }
-                } else {
-
-                    print("NOT Recurring payment")
-                    let summaryItem = PKPaymentSummaryItem(label: applePaymentSummaryItem["label"] as! String, amount: itemAmount)
-                    paymentSummaryItems.append(summaryItem)
-                }
-            }
-
-            let handlers = PaymentSheet.ApplePayConfiguration.Handlers(paymentRequestHandler: nil, authorizationResultHandler: {
-                paymentAuthorizationResult, completion in
-                if paymentAuthorizationResult.status == .success {
-                    useMobilePay = true                    
-                } else {
-                    for error in paymentAuthorizationResult.errors {
-                        print("authorizationResultHandler error: \(error.localizedDescription)\n")
-                    }
-                }
-                completion(paymentAuthorizationResult)
-            })
-
-            configuration.applePay = .init(merchantId: appleMerchantId, merchantCountryCode: merchantCountryCode, buttonType: PKPaymentButtonType.inStore, paymentSummaryItems: paymentSummaryItems, customHandlers: handlers)
+            configuration.applePay = .init(merchantId: appleMerchantId, merchantCountryCode: merchantCountryCode)
         }
 
         configuration.allowsDelayedPaymentMethods = true
