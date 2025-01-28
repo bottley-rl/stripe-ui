@@ -29,6 +29,7 @@ public class CheckoutActivity extends AppCompatActivity {
         String customerId = receivedIntent.getStringExtra("customerId");
         String ephemeralKey = receivedIntent.getStringExtra("ephemeralKey");
         String appleMerchantCountryCode = receivedIntent.getStringExtra("appleMerchantCountryCode");
+        String primaryButtonLabel = receivedIntent.getStringExtra("primaryButtonLabel");
 
         // Billing details
         String billingEmail = receivedIntent.getStringExtra("billingEmail");
@@ -119,7 +120,7 @@ public class CheckoutActivity extends AppCompatActivity {
                     ? new PaymentSheet.GooglePayConfiguration(PaymentSheet.GooglePayConfiguration.Environment.Test, appleMerchantCountryCode, "USD")
                     : null;
 
-            PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(merchantDisplayName, customer, googlePay, null, defaultBillingDetails, null, true, true, appearance, null, billingDetailsCollectionConfiguration);
+            PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(merchantDisplayName, customer, googlePay, null, defaultBillingDetails, null, true, true, appearance, primaryButtonLabel, billingDetailsCollectionConfiguration);
 
             if (paymentIntent != null && !paymentIntent.isEmpty() && !paymentIntent.equals("null")) {
                 paymentSheet.presentWithPaymentIntent(paymentIntent, configuration);

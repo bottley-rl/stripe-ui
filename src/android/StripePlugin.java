@@ -18,10 +18,12 @@ import com.stripe.android.model.SetupIntent;
 public class StripePlugin extends CordovaPlugin {
     private Stripe stripe;
     private CallbackContext callbackContext;
+    private static CallbackContext persistentCallbackContext;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         this.callbackContext = callbackContext;
+        persistentCallbackContext = callbackContext;
         if (action.equals("presentPaymentSheet")) {
             JSONObject paymentConfig = !args.getString(0).equals("null") ? args.getJSONObject(0) : null;
             JSONObject billingConfig = !args.getString(1).equals("null") ? args.getJSONObject(1) : null;
@@ -47,6 +49,7 @@ public class StripePlugin extends CordovaPlugin {
                 String ephemeralKey = paymentConfig.optString("customerEphemeralKeySecret", null);
                 String appleMerchantCountryCode = paymentConfig.optString("appleMerchantCountryCode", null);
                 boolean mobilePayEnabled = paymentConfig.optBoolean("mobilePayEnabled", false);
+                String primaryButtonLabel = paymentConfig.optString("primaryButtonLabel", null);
                 Intent intent = new Intent(cordova.getActivity().getApplicationContext(), CheckoutActivity.class);
                 intent.putExtra("publishableKey", publishableKey);
                 intent.putExtra("companyName", companyName);
@@ -56,6 +59,7 @@ public class StripePlugin extends CordovaPlugin {
                 intent.putExtra("ephemeralKey", ephemeralKey);
                 intent.putExtra("appleMerchantCountryCode", appleMerchantCountryCode);
                 intent.putExtra("mobilePayEnabled", mobilePayEnabled);
+                intent.putExtra("primaryButtonLabel", primaryButtonLabel);
 
                 if (billingConfig != null) {
                     String billingEmail = billingConfig.optString("billingEmail", null);
@@ -101,6 +105,7 @@ public class StripePlugin extends CordovaPlugin {
                     result.put("id", setupIntent.getId());
                     result.put("clientSecret", setupIntent.getClientSecret());
                     result.put("paymentMethodId", setupIntent.getPaymentMethodId());
+                    result.put("paymentMethod", setupIntent.getPaymentMethod());
                     result.put("created", setupIntent.getCreated());
 
                     callbackContext.success(new JSONObject(result));
@@ -130,10 +135,26 @@ public class StripePlugin extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == 1) {
+            if (callbackContext == null) {
+                if (persistentCallbackContext != null) {
+                    callbackContext = persistentCallbackContext;
+                } else {
+                    Log.e("StripeUIPlugin", "CallbackContext is null");
+                    return;
+                }
+            }
             if (resultCode == -1) {
-                HashMap<String, String> resultMap = (HashMap<String, String>) intent.getSerializableExtra("result");
-                String data = resultMap != null ? mapToJSON(resultMap).toString() : "OK";
-                callbackContext.success(data);
+                try {
+                    HashMap<String, String> resultMap = (HashMap<String, String>) intent.getSerializableExtra("result");
+                    HashMap<String, String> defaultMap = new HashMap<String, String>();
+                    defaultMap.put("message", "OK");
+                    JSONObject data = resultMap != null ? mapToJSON(resultMap) : mapToJSON(defaultMap);
+                    callbackContext.success(data);
+                } catch (Exception e) {
+                        callbackContext.error("Failed to parse result: " + e.getMessage());
+                }
+            } else {
+                callbackContext.error("Operation canceled or failed");
             }
         }
     }
