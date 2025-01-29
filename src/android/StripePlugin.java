@@ -47,7 +47,7 @@ public class StripePlugin extends CordovaPlugin {
                 String setupIntent = paymentConfig.optString("setupIntentClientSecret", null);
                 String customerId = paymentConfig.optString("customerId", null);
                 String ephemeralKey = paymentConfig.optString("customerEphemeralKeySecret", null);
-                String appleMerchantCountryCode = paymentConfig.optString("appleMerchantCountryCode", null);
+                String merchantCountryCode = paymentConfig.optString("merchantCountryCode", null);
                 boolean mobilePayEnabled = paymentConfig.optBoolean("mobilePayEnabled", false);
                 boolean isProductionEnv = paymentConfig.optBoolean("isProductionEnv", false);
                 String primaryButtonLabel = paymentConfig.optString("primaryButtonLabel", null);
@@ -58,7 +58,7 @@ public class StripePlugin extends CordovaPlugin {
                 intent.putExtra("setupIntent", setupIntent);
                 intent.putExtra("customerId", customerId);
                 intent.putExtra("ephemeralKey", ephemeralKey);
-                intent.putExtra("appleMerchantCountryCode", appleMerchantCountryCode);
+                intent.putExtra("merchantCountryCode", merchantCountryCode);
                 intent.putExtra("mobilePayEnabled", mobilePayEnabled);
                 intent.putExtra("isProductionEnv", isProductionEnv);
                 intent.putExtra("primaryButtonLabel", primaryButtonLabel);

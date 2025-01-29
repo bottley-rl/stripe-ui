@@ -13,6 +13,8 @@ import com.stripe.android.paymentsheet.PaymentSheetResult;
 import java.util.HashMap;
 import androidx.compose.ui.graphics.Color;
 
+import android.util.Log;
+
 public class CheckoutActivity extends AppCompatActivity {
     Intent resultIntent = new Intent();
     HashMap<String, String> resultMap = new HashMap<>();
@@ -122,10 +124,13 @@ public class CheckoutActivity extends AppCompatActivity {
             PaymentSheet.GooglePayConfiguration googlePay = null;
 
             if (mobilePayEnabled) {
+                Log.i(TAG, "mobilePayEnabled: " + mobilePayEnabled);
                 PaymentSheet.GooglePayConfiguration.Environment environment =
                     isProductionEnv
                         ? PaymentSheet.GooglePayConfiguration.Environment.Production
                         : PaymentSheet.GooglePayConfiguration.Environment.Test;
+
+                Log.i(TAG, "environment: " + environment);
 
                 googlePay = new PaymentSheet.GooglePayConfiguration(
                     environment,
