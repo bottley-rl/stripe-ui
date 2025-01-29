@@ -13,8 +13,6 @@ import com.stripe.android.paymentsheet.PaymentSheetResult;
 import java.util.HashMap;
 import androidx.compose.ui.graphics.Color;
 
-import android.util.Log;
-
 public class CheckoutActivity extends AppCompatActivity {
     Intent resultIntent = new Intent();
     HashMap<String, String> resultMap = new HashMap<>();
@@ -50,8 +48,6 @@ public class CheckoutActivity extends AppCompatActivity {
         boolean isProductionEnv = receivedIntent.getBooleanExtra("isProductionEnv", false);
 
         try {
-
-           Log.i(TAG, "isProductionEnv: " + isProductionEnv);
             assert publishableKey != null;
             assert merchantDisplayName != null;
             PaymentConfiguration.init(this, publishableKey);
@@ -123,12 +119,20 @@ public class CheckoutActivity extends AppCompatActivity {
                 ? new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey)
                 : null;    
 
-            PaymentSheet.GooglePayConfiguration googlePay = mobilePayEnabled
-                    ? new PaymentSheet.GooglePayConfiguration(
-                        isProductionEnv ? PaymentSheet.GooglePayConfiguration.Environment.Production : PaymentSheet.GooglePayConfiguration.Environment.Test, 
-                        merchantCountryCode, 
-                        "USD")
-                    : null;
+            PaymentSheet.GooglePayConfiguration googlePay = null;
+
+            if (mobilePayEnabled) {
+                PaymentSheet.GooglePayConfiguration.Environment environment =
+                    isProductionEnv
+                        ? PaymentSheet.GooglePayConfiguration.Environment.Production
+                        : PaymentSheet.GooglePayConfiguration.Environment.Test;
+
+                googlePay = new PaymentSheet.GooglePayConfiguration(
+                    environment,
+                    merchantCountryCode,
+                    "USD"
+                );
+            }
 
             PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(merchantDisplayName, customer, googlePay, null, defaultBillingDetails, null, true, true, appearance, primaryButtonLabel, billingDetailsCollectionConfiguration);
 
