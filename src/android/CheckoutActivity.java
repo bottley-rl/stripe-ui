@@ -13,6 +13,8 @@ import com.stripe.android.paymentsheet.PaymentSheetResult;
 import java.util.HashMap;
 import androidx.compose.ui.graphics.Color;
 
+import java.util.logging
+
 public class CheckoutActivity extends AppCompatActivity {
     Intent resultIntent = new Intent();
     HashMap<String, String> resultMap = new HashMap<>();
@@ -28,7 +30,7 @@ public class CheckoutActivity extends AppCompatActivity {
         String setupIntent = receivedIntent.getStringExtra("setupIntent");
         String customerId = receivedIntent.getStringExtra("customerId");
         String ephemeralKey = receivedIntent.getStringExtra("ephemeralKey");
-        String appleMerchantCountryCode = receivedIntent.getStringExtra("appleMerchantCountryCode");
+        String merchantCountryCode = receivedIntent.getStringExtra("merchantCountryCode");
         String primaryButtonLabel = receivedIntent.getStringExtra("primaryButtonLabel");
 
         // Billing details
@@ -44,7 +46,11 @@ public class CheckoutActivity extends AppCompatActivity {
 
         boolean mobilePayEnabled = receivedIntent.getBooleanExtra("mobilePayEnabled", false);
 
+        boolean isProductionEnv = receivedIntent.getBooleanExtra("isProductionEnv", false);
+
         try {
+
+            logger.info("isProductionEnv: " + isProductionEnv)
             assert publishableKey != null;
             assert merchantDisplayName != null;
             PaymentConfiguration.init(this, publishableKey);
@@ -114,10 +120,13 @@ public class CheckoutActivity extends AppCompatActivity {
             );
             PaymentSheet.CustomerConfiguration customer = (customerId != null && !customerId.isEmpty() && ephemeralKey != null && !ephemeralKey.isEmpty()) 
                 ? new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey)
-                : null;
+                : null;    
 
             PaymentSheet.GooglePayConfiguration googlePay = mobilePayEnabled
-                    ? new PaymentSheet.GooglePayConfiguration(PaymentSheet.GooglePayConfiguration.Environment.Test, merchantCountryCode, "USD")
+                    ? new PaymentSheet.GooglePayConfiguration(
+                        isProductionEnv ? PaymentSheet.GooglePayConfiguration.Environment.Production : PaymentSheet.GooglePayConfiguration.Environment.Test, 
+                        merchantCountryCode, 
+                        "USD")
                     : null;
 
             PaymentSheet.Configuration configuration = new PaymentSheet.Configuration(merchantDisplayName, customer, googlePay, null, defaultBillingDetails, null, true, true, appearance, primaryButtonLabel, billingDetailsCollectionConfiguration);
