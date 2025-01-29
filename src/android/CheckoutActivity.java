@@ -48,7 +48,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         try {
 
-            Log.i("isProductionEnv: " + isProductionEnv);
+           Log.i(TAG, "isProductionEnv: " + isProductionEnv);
             assert publishableKey != null;
             assert merchantDisplayName != null;
             PaymentConfiguration.init(this, publishableKey);
