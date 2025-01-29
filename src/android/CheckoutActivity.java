@@ -18,6 +18,7 @@ import android.util.Log;
 public class CheckoutActivity extends AppCompatActivity {
     Intent resultIntent = new Intent();
     HashMap<String, String> resultMap = new HashMap<>();
+    private static final String TAG = "CheckoutActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
