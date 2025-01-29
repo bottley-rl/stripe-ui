@@ -13,6 +13,8 @@ import com.stripe.android.paymentsheet.PaymentSheetResult;
 import java.util.HashMap;
 import androidx.compose.ui.graphics.Color;
 
+import android.util.Log;
+
 public class CheckoutActivity extends AppCompatActivity {
     Intent resultIntent = new Intent();
     HashMap<String, String> resultMap = new HashMap<>();
