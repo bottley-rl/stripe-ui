@@ -13,8 +13,6 @@ import com.stripe.android.paymentsheet.PaymentSheetResult;
 import java.util.HashMap;
 import androidx.compose.ui.graphics.Color;
 
-import java.util.logging;
-
 public class CheckoutActivity extends AppCompatActivity {
     Intent resultIntent = new Intent();
     HashMap<String, String> resultMap = new HashMap<>();
@@ -50,7 +48,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         try {
 
-            logger.info("isProductionEnv: " + isProductionEnv);
+            Log.i("isProductionEnv: " + isProductionEnv);
             assert publishableKey != null;
             assert merchantDisplayName != null;
             PaymentConfiguration.init(this, publishableKey);
